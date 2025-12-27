@@ -17,9 +17,9 @@
       <div>
         <h5>User Name</h5>
         <p
-          class="border rounded-2xl text-black font-semibold px-2 py-0.5 my-2 text-sm border-white"
+          class="border rounded-2xl text-black font-semibold px-3 py-0.5 my-2 text-sm border-white"
         >
-          User role
+          Administrator
         </p>
       </div>
     </div>
@@ -31,6 +31,7 @@
           [title]="navigation.label"
           class="flex items-center gap-3 p-3 hover:bg-sidebar-accent duration-300 rounded-2xl"
           [routerLink]="navigation.route"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="bg-white text-sidebar-bg hover:bg-white"
         >
           <lucide-icon [img]="navigation.icon" color="currentColor" />
@@ -40,9 +41,9 @@
       }
     </ul>
 
-    <div class="flex flex-col gap-3 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
+    <div class="flex flex-col gap-1 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
       @if(userRole()==='admin'){
-      <ul>
+      <ul class="flex flex-col gap-1">
         <li>
           <a
             title="Settings"

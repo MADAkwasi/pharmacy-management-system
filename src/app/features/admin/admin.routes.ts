@@ -10,6 +10,18 @@ export const ADMIN_ROUTES: Routes = [
         path: '',
         loadComponent: () => import('@shared/pages/home/home').then((DEFAULT) => DEFAULT.Home),
       },
+      {
+        path: 'user-management',
+        loadComponent: () =>
+          import('./presentation/pages/user-management/user-management').then(
+            (DEFAULT) => DEFAULT.UserManagement
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./presentation/pages/settings/settings').then((DEFAULT) => DEFAULT.Settings),
+      },
     ],
   },
 ];
