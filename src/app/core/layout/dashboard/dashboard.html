@@ -24,6 +24,21 @@
       </div>
     </div>
 
+    <ul class="px-6 py-3 flex flex-col gap-2">
+      @for(navigation of userNavigation(); track $index){
+      <li>
+        <a
+          class="flex items-center gap-3 p-3"
+          [routerLink]="navigation.route"
+          routerLinkActive="bg-white text-sidebar-bg rounded-2xl"
+        >
+          <lucide-icon [img]="navigation.icon" color="white" />
+          <p>{{ navigation.label }}</p></a
+        >
+      </li>
+      }
+    </ul>
+
     <div class="flex items-center gap-3 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
       <app-button title="Logout" class="flex gap-2 items-center" variant="tertiary">
         <lucide-icon [img]="icons.LogOut" color="white" />
