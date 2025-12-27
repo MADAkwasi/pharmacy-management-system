@@ -7,7 +7,7 @@ import {
   salesAttendantNavigation,
 } from '@shared/constants/navlinks';
 import { Roles } from '@shared/models/users';
-import { LogOut, LucideAngularModule, Pill } from 'lucide-angular';
+import { LogOut, LucideAngularModule, Pill, Settings, UserCog } from 'lucide-angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,7 @@ import { LogOut, LucideAngularModule, Pill } from 'lucide-angular';
 })
 export class Dashboard {
   protected readonly userRole = signal<Roles>(Roles.ADMIN);
-  protected readonly icons = { Pill, LogOut };
+  protected readonly icons = { Pill, LogOut, Settings, UserCog };
   protected readonly userNavigation = computed(() =>
     this.userRole() === Roles.ADMIN
       ? adminNavigation

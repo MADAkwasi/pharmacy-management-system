@@ -24,24 +24,58 @@
       </div>
     </div>
 
-    <ul class="px-6 py-3 flex flex-col gap-2">
+    <ul class="px-6 py-3 flex flex-col gap-1 overflow-y-auto flex-1">
       @for(navigation of userNavigation(); track $index){
       <li>
         <a
-          class="flex items-center gap-3 p-3"
+          [title]="navigation.label"
+          class="flex items-center gap-3 p-3 hover:bg-sidebar-accent duration-300 rounded-2xl"
           [routerLink]="navigation.route"
-          routerLinkActive="bg-white text-sidebar-bg rounded-2xl"
+          routerLinkActive="bg-white text-sidebar-bg hover:bg-white"
         >
-          <lucide-icon [img]="navigation.icon" color="white" />
+          <lucide-icon [img]="navigation.icon" color="currentColor" />
           <p>{{ navigation.label }}</p></a
         >
       </li>
       }
     </ul>
 
-    <div class="flex items-center gap-3 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
-      <app-button title="Logout" class="flex gap-2 items-center" variant="tertiary">
-        <lucide-icon [img]="icons.LogOut" color="white" />
+    <div class="flex flex-col gap-3 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
+      @if(userRole()==='admin'){
+      <ul>
+        <li>
+          <a
+            title="Settings"
+            class="flex items-center gap-3 p-3 hover:bg-sidebar-accent duration-300 rounded-2xl"
+            routerLink="/admin/settings"
+            routerLinkActive="bg-white text-sidebar-bg hover:bg-white"
+          >
+            <lucide-icon [img]="icons.Settings" color="currentColor" />
+            <p>Settings</p></a
+          >
+        </li>
+
+        <li>
+          <a
+            title="User Management"
+            class="flex items-center gap-3 p-3 hover:bg-sidebar-accent duration-300 rounded-2xl"
+            routerLink="/admin/user-management"
+            routerLinkActive="bg-white text-sidebar-bg hover:bg-white"
+          >
+            <lucide-icon [img]="icons.UserCog" color="currentColor" />
+            <p>User Management</p></a
+          >
+        </li>
+      </ul>
+      }
+
+      <app-button
+        title="Logout"
+        variant="secondary"
+        class="flex gap-2 items-center"
+        customStyles="w-full justify-center hover:bg-white hover:!text-sidebar-bg"
+      >
+        <lucide-icon [img]="icons.LogOut" color="#2a9d90" />
         <p>Logout</p>
       </app-button>
     </div>
