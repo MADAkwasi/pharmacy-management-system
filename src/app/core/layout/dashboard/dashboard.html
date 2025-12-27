@@ -1,1 +1,30 @@
-<p class="bg-[--sidebar-bg]">dashboard works!</p>
+<main class="flex w-full h-screen overflow-y-auto">
+  <section class="bg-sidebar-bg w-1/4 text-white">
+    <div class="flex items-center gap-3 py-6 px-5 border-b border-b-sidebar-accent">
+      <span class="h-12 w-12 rounded-xl bg-white flex items-center justify-center">
+        <lucide-icon [img]="icons.Pill" [size]="30" color="#2a9d90" />
+      </span>
+      <div>
+        <h1 class="font-bold text-2xl">PharmaCare</h1>
+        <p class="text-gray-300">Management System</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 py-6 px-5 border-b border-b-sidebar-accent">
+      <span class="h-12 w-12 rounded-full bg-sidebar-accent flex justify-center items-center"
+        >UN</span
+      >
+      <div>
+        <h5>User Name</h5>
+        <p
+          class="border rounded-2xl text-black font-semibold px-2 py-0.5 my-2 text-sm border-white"
+        >
+          User role
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="w-3/4">
+    <router-outlet />
+  </section>
+</main>

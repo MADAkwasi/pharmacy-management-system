@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@theme{
-  --sidebar-bg: #30b5a6
+@theme {
+  --color-sidebar-bg: #2a9d90;
+  --color-sidebar-accent: #30b5a6;
 }
