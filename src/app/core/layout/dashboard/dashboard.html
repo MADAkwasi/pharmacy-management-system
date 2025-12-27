@@ -1,5 +1,5 @@
 <main class="flex w-full h-screen overflow-y-auto">
-  <section class="bg-sidebar-bg w-1/4 text-white">
+  <section class="bg-sidebar-bg w-1/5 text-white flex flex-col">
     <div class="flex items-center gap-3 py-6 px-5 border-b border-b-sidebar-accent">
       <span class="h-12 w-12 rounded-xl bg-white flex items-center justify-center">
         <lucide-icon [img]="icons.Pill" [size]="30" color="#2a9d90" />
@@ -22,6 +22,13 @@
           User role
         </p>
       </div>
+    </div>
+
+    <div class="flex items-center gap-3 py-6 px-5 border-t border-t-sidebar-accent mt-auto">
+      <app-button title="Logout" class="flex gap-2 items-center" variant="tertiary">
+        <lucide-icon [img]="icons.LogOut" color="white" />
+        <p>Logout</p>
+      </app-button>
     </div>
   </section>
   <section class="w-3/4">

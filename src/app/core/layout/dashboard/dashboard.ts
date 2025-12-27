@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LucideAngularModule, Pill } from 'lucide-angular';
+import { Button } from '@shared/components/button/button';
+import { LogOut, LucideAngularModule, Pill } from 'lucide-angular';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, LucideAngularModule],
+  imports: [RouterOutlet, LucideAngularModule, Button],
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
-  protected readonly icons = {Pill}
+  protected readonly icons = { Pill, LogOut };
 }

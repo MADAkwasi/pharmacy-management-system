@@ -1,0 +1,15 @@
+<button
+  [title]="title()"
+  [type]="type()"
+  class="flex gap-2 items-center duration-300 cursor-pointer px-3 py-2 rounded-xl"
+  [class]="customStyles()"
+  [ngClass]="{
+    'bg-sidebar-bg text-white hover:bg-sidebar-accent': variant() === 'primary',
+    'bg-transparent border border-sidebar-bg hover:bg-sidebar-bg hover:text-white text-sidebar-bg':
+      variant() === 'secondary',
+    'bg-transparent border-0': variant() === 'tertiary'
+  }"
+  (click)="handleOnClick($event)"
+>
+  <ng-content />
+</button>
