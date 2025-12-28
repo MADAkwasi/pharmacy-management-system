@@ -7,13 +7,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './button.html',
 })
 export class Button {
-  public readonly title = input.required<String>();
+  public readonly title = input.required<string>();
   public readonly variant = input<'primary' | 'secondary' | 'tertiary'>('primary');
   public readonly customStyles = input<string>('');
   public readonly type = input<'button' | 'submit'>('button');
-  public readonly onClick = output<Event>();
+  public readonly clickEvent = output<Event>();
 
   protected handleOnClick(event: Event): void {
-    this.onClick.emit(event);
+    this.clickEvent.emit(event);
   }
 }

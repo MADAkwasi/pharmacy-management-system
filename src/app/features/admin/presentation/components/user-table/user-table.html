@@ -1,0 +1,50 @@
+<table class="w-full border-collapse" [class.text-gray-500]="type() === 'deactivated'">
+  <thead>
+    <tr
+      class="border-b border-gray-200 text-left text-sm font-semibold"
+      [class.text-gray-600]="type() === 'activated'"
+    >
+      @for(col of headCols(); track $index){
+      <th class="py-3 px-4" [class.text-right]="col === 'Actions'">{{ col }}</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for(user of users; track $index){
+    <tr class="border-b border-gray-100 text-sm hover:bg-gray-50">
+      <td class="py-3 px-4">{{ user.name }}</td>
+      <td class="py-3 px-4">{{ user.email }}</td>
+      <td class="py-3 px-4">
+        <span
+          class="px-3 py-0.5 capitalize text-xs font-bold rounded-2xl"
+          [ngClass]="{
+            'text-black border border-gray-200 bg-gray-100': user.role !== 'admin',
+            'text-white border border-gray-200 bg-sidebar-bg': user.role === 'admin'
+          }"
+        >
+          {{ user.role === 'admin' ? 'Administrator' : user.role }}
+        </span>
+      </td>
+      @if(type()==='activated'){
+      <td class="py-3 px-4">{{ user.createdAt | date : 'MMM d, yyyy' }}</td>
+      <td class="py-3 px-4">{{ user.lastLoginAt | date : 'MMM d, yyyy' }}</td>
+      }
+      <td class="py-3 px-4">
+        <div class="flex justify-end">
+          <app-button
+            [title]="type() === 'activated' ? 'Deactivated User' : 'Reactivated User'"
+            [variant]="type() === 'activated' ? 'tertiary' : 'secondary'"
+          >
+            @if (type() === 'activated') {
+            <lucide-icon [img]="icons.UserX" [size]="20" color="red" />
+            } @else {
+            <p class="text-sm">Reactivate</p>
+            }
+          </app-button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
