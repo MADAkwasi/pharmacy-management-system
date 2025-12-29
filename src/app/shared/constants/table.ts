@@ -8,3 +8,14 @@ export const activatedUsersTableColumn = [
 ];
 
 export const deactivatedUsersTableColumn = ['Name', 'Email', 'Role', 'Actions'];
+
+export const inventoryTableColumn = [
+  'Medicine',
+  'Category',
+  'Batch No.',
+  'Stock',
+  'Price',
+  'Expiry',
+  'Status',
+  'Actions',
+];

@@ -1,0 +1,41 @@
+<div class="rounded-2xl border border-gray-300 overflow-hidden">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="border-b border-gray-200 text-left text-sm font-semibold">
+        @for(col of headCols(); track $index){
+        <th class="py-3 px-4" [class.text-right]="col === 'Actions'">{{ col }}</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(medication of medications; track $index){
+      <tr class="border-b border-gray-100 text-sm hover:bg-gray-50">
+        <td class="py-3 px-4">{{ medication.name }}</td>
+        <td class="py-3 px-4">{{ medication.category }}</td>
+        <td class="py-3 px-4">
+          {{ medication.batchNumber }}
+        </td>
+        <td class="py-3 px-4">{{ medication.quantity }}</td>
+        <td class="py-3 px-4">{{ medication.unitPrice }}</td>
+        <td class="py-3 px-4">{{ medication.expiryDate }}</td>
+        <td class="py-3 px-4">{{ medication.minStock }}</td>
+        <td class="py-3 px-4">
+          <!-- <div class="flex justify-end">
+          <app-button
+            [title]="type() === 'activated' ? 'Deactivated User' : 'Reactivated User'"
+            [variant]="type() === 'activated' ? 'tertiary' : 'secondary'"
+          >
+            @if (type() === 'activated') {
+            <lucide-icon [img]="icons.UserX" [size]="20" color="red" />
+            } @else {
+            <p class="text-sm">Reactivate</p>
+            }
+          </app-button>
+        </div> -->
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

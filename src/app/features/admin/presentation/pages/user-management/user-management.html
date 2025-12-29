@@ -66,14 +66,17 @@
 
   <app-text-input placeholder="Enter email address" label="Email Address" />
 
-  <mat-form-field>
-    <mat-label>Select a role</mat-label>
-    <mat-select>
-      @for (option of options; track $index) {
-      <mat-option [value]="option.value">{{ option.label }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <div class="flex flex-col gap-2 w-full">
+    <p>Role</p>
+    <mat-form-field>
+      <mat-label>Select a role</mat-label>
+      <mat-select>
+        @for (option of options; track $index) {
+        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div class="flex items-center justify-end gap-2">
     <app-button title="Cancel" variant="secondary"> Cancel </app-button>

@@ -1,0 +1,24 @@
+<main class="px-10 py-8 flex flex-col gap-8">
+  <div class="flex items-center justify-between">
+    <span>
+      <h2 class="text-3xl font-bold">Inventory</h2>
+      <p class="text-gray-500">Manage your medication stock</p>
+    </span>
+    <app-button title="Add Inventory">
+      <lucide-icon [img]="icons.Plus" color="white" />
+      <p>Add Inventory</p>
+    </app-button>
+  </div>
+
+  <div class="items-center justify-between flex">
+    <div class="w-3/4">
+      <app-text-input placeholder="Search medications..." [icon]="icons.Search" />
+    </div>
+
+    <div class="w-1/5">
+      <app-text-input placeholder="Categories" />
+    </div>
+  </div>
+
+  <app-table />
+</main>
