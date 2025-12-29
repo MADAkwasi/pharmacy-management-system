@@ -19,11 +19,11 @@
         <span
           class="px-3 py-0.5 capitalize text-xs font-bold rounded-2xl"
           [ngClass]="{
-            'text-black border border-gray-200 bg-gray-100': user.role !== 'admin',
+            'text-black border border-gray-300 bg-gray-200': user.role !== 'admin',
             'text-white border border-gray-200 bg-sidebar-bg': user.role === 'admin'
           }"
         >
-          {{ user.role === 'admin' ? 'Administrator' : user.role }}
+          {{ user.role === 'admin' ? 'Administrator' : user.role.replace('-', ' ') }}
         </span>
       </td>
       @if(type()==='activated'){

@@ -1,5 +1,4 @@
-import { User } from '@shared/models/user';
-import { Roles } from '@shared/models/users';
+import { User, Roles, RoleOption } from '@shared/models/user';
 
 export const DEMO_USERS: User[] = [
   {
@@ -28,5 +27,20 @@ export const DEMO_USERS: User[] = [
     isActive: true,
     createdAt: '2024-02-01T00:00:00Z',
     lastLoginAt: '2025-01-03T08:30:00Z',
+  },
+];
+
+export const roleOptions: RoleOption[] = [
+  {
+    label: 'Administrator',
+    value: 'admin',
+  },
+  {
+    label: 'Pharmacist',
+    value: 'pharmacist',
+  },
+  {
+    label: 'Sales Attendant',
+    value: 'sales-attendant',
   },
 ];

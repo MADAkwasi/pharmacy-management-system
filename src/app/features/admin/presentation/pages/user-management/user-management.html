@@ -4,7 +4,7 @@
       <h2 class="text-3xl font-bold">User Management</h2>
       <p class="text-gray-500">Manage user accounts and assign roles</p>
     </span>
-    <app-button title="Add User">
+    <app-button title="Add User" (clickEvent)="isModalOpen.set(true)">
       <lucide-icon [img]="icons.UserPlus" color="white" />
       <p>Add User</p>
     </app-button>
@@ -55,3 +55,28 @@
     <app-user-table type="deactivated" />
   </div>
 </main>
+
+<app-modal
+  [isModalOpen]="isModalOpen()"
+  (closeModal)="isModalOpen.set(false)"
+  title="Add New User"
+  subtitle="Create a new user account with a specific role"
+>
+  <app-text-input placeholder="Enter full name" label="Full Name" />
+
+  <app-text-input placeholder="Enter email address" label="Email Address" />
+
+  <mat-form-field>
+    <mat-label>Select a role</mat-label>
+    <mat-select>
+      @for (option of options; track $index) {
+      <mat-option [value]="option.value">{{ option.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex items-center justify-end gap-2">
+    <app-button title="Cancel" variant="secondary"> Cancel </app-button>
+    <app-button title="Create User"> Create User </app-button>
+  </div>
+</app-modal>

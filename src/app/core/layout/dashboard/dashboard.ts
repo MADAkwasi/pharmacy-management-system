@@ -6,7 +6,7 @@ import {
   pharmacistNavigation,
   salesAttendantNavigation,
 } from '@shared/constants/navlinks';
-import { Roles } from '@shared/models/users';
+import { Roles } from '@shared/models/user';
 import { LogOut, LucideAngularModule, Pill, Settings, UserCog } from 'lucide-angular';
 
 @Component({
