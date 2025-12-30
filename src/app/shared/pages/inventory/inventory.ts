@@ -1,7 +1,7 @@
 import { mockMedications } from '@shared/constants/medication';
 import { Component, computed, signal } from '@angular/core';
 import { Button } from '@shared/components/button/button';
-import { Table } from '@shared/components/table/table';
+import { InventoryTable } from '@shared/components/inventory-table/inventory-table';
 import { TextInput } from '@shared/components/text-input/text-input';
 import { Funnel, LucideAngularModule, Plus, Search } from 'lucide-angular';
 import { Modal } from '@shared/components/modal/modal';
@@ -10,7 +10,15 @@ import { MedicationForm } from '@shared/components/medication-form/medication-fo
 
 @Component({
   selector: 'app-inventory',
-  imports: [Button, LucideAngularModule, TextInput, Table, Modal, SelectInput, MedicationForm],
+  imports: [
+    Button,
+    LucideAngularModule,
+    TextInput,
+    InventoryTable,
+    Modal,
+    SelectInput,
+    MedicationForm,
+  ],
   templateUrl: './inventory.html',
 })
 export class Inventory {
@@ -19,7 +27,7 @@ export class Inventory {
   protected readonly categories = computed(() => [
     { label: 'All Categories', value: 'all' },
     ...new Set(
-      mockMedications.map((med) => ({ 
+      mockMedications.map((med) => ({
         label: med.category,
         value: med.category.replace(' ', '-').toLowerCase(),
       }))

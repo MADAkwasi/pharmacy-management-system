@@ -6,11 +6,11 @@ import { LucideAngularModule, Pencil, Trash2, TriangleAlert } from 'lucide-angul
 import { Button } from '../button/button';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-inventory-table',
   imports: [LucideAngularModule, CommonModule, DatePipe, CurrencyPipe, Button],
-  templateUrl: './table.html',
+  templateUrl: './inventory-table.html',
 })
-export class Table {
+export class InventoryTable {
   protected readonly headCols = input(inventoryTableColumn);
   protected readonly medications = mockMedications;
   protected readonly icons = { TriangleAlert, Pencil, Trash2 };
