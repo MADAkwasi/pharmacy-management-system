@@ -62,14 +62,5 @@
   title="Add New User"
   subtitle="Create a new user account with a specific role"
 >
-  <app-text-input placeholder="Enter full name" label="Full Name" />
-
-  <app-text-input placeholder="Enter email address" label="Email Address" />
-
-  <app-select-input [options]="options" label="Role" placeholder="Select a role" />
-
-  <div class="flex items-center justify-end gap-2">
-    <app-button title="Cancel" variant="secondary"> Cancel </app-button>
-    <app-button title="Create User"> Create User </app-button>
-  </div>
+  <app-user-form />
 </app-modal>
