@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Dashboard } from '@core/layout/dashboard/dashboard';
 
 export const APP_ROUTES: Routes = [
   {
@@ -16,5 +17,16 @@ export const APP_ROUTES: Routes = [
       import('@features/sales-attendant/sales-attendant.routes').then(
         (m) => m.SALES_ATTENDANT_ROUTES
       ),
+  },
+  {
+    path: '',
+    component: Dashboard,
+    children: [
+      {
+        path: 'inventory',
+        loadComponent: () =>
+          import('@shared/pages/inventory/inventory').then((DEFAULT) => DEFAULT.Inventory),
+      },
+    ],
   },
 ];

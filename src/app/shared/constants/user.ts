@@ -1,4 +1,4 @@
-import { User, Roles, RoleOption } from '@shared/models/user';
+import { User, Roles, SelectOption } from '@shared/models/user';
 
 export const DEMO_USERS: User[] = [
   {
@@ -30,7 +30,7 @@ export const DEMO_USERS: User[] = [
   },
 ];
 
-export const roleOptions: RoleOption[] = [
+export const roleOptions: SelectOption[] = [
   {
     label: 'Administrator',
     value: 'admin',
