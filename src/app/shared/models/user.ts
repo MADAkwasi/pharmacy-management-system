@@ -14,7 +14,7 @@ export enum Roles {
   SALES_ATTENDANT = 'sales-attendant',
 }
 
-export interface RoleOption {
+export interface SelectOption {
   label: string;
   value: string;
 }

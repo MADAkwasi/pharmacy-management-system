@@ -1,4 +1,5 @@
 import { Medication } from '@shared/models/medication';
+import { SelectOption } from '@shared/models/user';
 
 export const mockMedications: Medication[] = [
   {
@@ -97,4 +98,23 @@ export const mockMedications: Medication[] = [
     createdAt: '2024-01-02',
     updatedAt: '2024-01-02',
   },
+];
+
+export const categoryOptions: SelectOption[] = [
+  { label: 'Pain Relief', value: 'pain-relief' },
+  { label: 'Antibiotics', value: 'antibiotics' },
+  { label: 'Cold & Flu', value: 'cold-flu' },
+  { label: 'Allergy', value: 'allergy' },
+  { label: 'Diabetes', value: 'diabetes' },
+  { label: 'Cardiovascular', value: 'cardiovascular' },
+  { label: 'Digestive', value: 'digestive' },
+  { label: 'Respiratory', value: 'respiratory' },
+  { label: 'Mental Health', value: 'mental-health' },
+  { label: 'Eye Care', value: 'eye-care' },
+  { label: 'ENT', value: 'ent' },
+  { label: 'Vitamins & Supplements', value: 'vitamins-supplements' },
+  { label: 'Skin Care', value: 'skin-care' },
+  { label: 'Women’s Health', value: 'womens-health' },
+  { label: 'Pediatrics', value: 'pediatrics' },
+  { label: 'Other', value: 'other' },
 ];

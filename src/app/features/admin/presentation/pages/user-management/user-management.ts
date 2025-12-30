@@ -5,23 +5,12 @@ import { LucideAngularModule } from 'lucide-angular/src/icons';
 import { UserTable } from '../../components/user-table/user-table';
 import { Modal } from '@shared/components/modal/modal';
 import { TextInput } from '@shared/components/text-input/text-input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
 import { roleOptions } from '@shared/constants/user';
+import { SelectInput } from '@shared/components/select-input/select-input';
 
 @Component({
   selector: 'app-user-management',
-  imports: [
-    Button,
-    LucideAngularModule,
-    UserTable,
-    Modal,
-    TextInput,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-  ],
+  imports: [Button, LucideAngularModule, UserTable, Modal, TextInput, SelectInput],
   templateUrl: './user-management.html',
 })
 export class UserManagement {

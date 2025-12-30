@@ -10,6 +10,6 @@ export class TextInput {
   public readonly placeholder = input.required<string>();
   public readonly icon = input<LucideIconData>();
   public readonly iconPosition = input<'left' | 'right'>('left');
-  public readonly label = input('');
+  public readonly label = input<string>();
   public readonly type = input('text');
 }

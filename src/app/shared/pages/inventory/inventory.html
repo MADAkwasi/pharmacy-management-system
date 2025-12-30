@@ -4,7 +4,7 @@
       <h2 class="text-3xl font-bold">Inventory</h2>
       <p class="text-gray-500">Manage your medication stock</p>
     </span>
-    <app-button title="Add Inventory">
+    <app-button title="Add Inventory" (clickEvent)="isModalOpen.set(true)">
       <lucide-icon [img]="icons.Plus" color="white" />
       <p>Add Inventory</p>
     </app-button>
@@ -16,9 +16,93 @@
     </div>
 
     <div class="w-1/5">
-      <app-text-input placeholder="Categories" />
+      <app-select-input
+        [options]="categories()"
+        [leftIcon]="icons.Funnel"
+        [hasPlaceholder]="false"
+      />
     </div>
   </div>
 
   <app-table />
 </main>
+
+<app-modal
+  title="Add New Medication"
+  [isModalOpen]="isModalOpen()"
+  (closeModal)="isModalOpen.set(false)"
+  [hasFixedHeader]="true"
+>
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-text-input placeholder="e.g., Paracetamol 500mg" label="Medication Name *" />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input placeholder="e.g., Acetaminophen" label="Generic Name *" />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-select-input label="Category *" [options]="categoryOptions" />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input placeholder="e.g., PharmaCorp" label="Manufacturer *" />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-text-input placeholder="e.g., PC-2024-001" label="Batch Number *" />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input placeholder="dd/mm/yyyy" type="date" label="Expiry Date *" />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-text-input placeholder="0" type="number" label="Quantity *" />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input placeholder="0" type="number" label="Minimum Stock Level *" />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-text-input placeholder="0" type="number" label="Cost Price *" />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input placeholder="0" type="number" label="Selling Price *" />
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 w-full">
+    <p>Description</p>
+    <textarea
+      placeholder="Add any additional notes..."
+      rows="4"
+      class="w-full px-4 py-3 rounded-lg focus:outline focus:outline-sidebar-bg border border-gray-300"
+    ></textarea>
+  </div>
+
+  <div class="flex items-center gap-3 w-full">
+    <app-button
+      title="Cancel"
+      variant="secondary"
+      class="w-1/2"
+      customStyles="w-full justify-center"
+    >
+      Cancel
+    </app-button>
+    <app-button title="Create User" class="w-1/2" customStyles="w-full justify-center">
+      Add Medication
+    </app-button>
+  </div>
+</app-modal>
