@@ -32,7 +32,7 @@
           </span>
         </td>
         <td class="py-3 px-4 text-black font-semibold">{{ sale.total | currency : 'GHC' }}</td>
-        <td class="py-3 px-4">{{ sale.createdAt | date : 'MMM dd, yyyy HH:mm' }}</td>
+        <td class="py-3 px-4">{{ sale.createdAt | date : 'MMM dd, yyyy hh:mm a' }}</td>
 
         <td class="py-3 px-4">
           <span>
@@ -43,7 +43,11 @@
         </td>
         <td class="py-3 px-4">
           <div class="flex justify-end">
-            <app-button title="View Details" variant="tertiary">
+            <app-button
+              title="View Details"
+              variant="tertiary"
+              (clickEvent)="handleToggleDetailModal(sale)"
+            >
               <lucide-icon [img]="icons.Eye" [size]="15" color="#99a1af" />
             </app-button>
           </div>
@@ -53,3 +57,53 @@
     </tbody>
   </table>
 </div>
+
+<app-modal
+  [isModalOpen]="isDetailsModalOpen()"
+  [title]="'Invoice #' + selectedSale()?.id"
+  [subtitle]="(selectedSale()?.createdAt | date : 'MMMM dd, yyyy hh:mm a') ?? ''"
+  (closeModal)="handleToggleDetailModal()"
+  [hasBottomCloseBtn]="true"
+  [hasXCloseButton]="false"
+  [hasFixedHeader]="true"
+>
+  <div class="px-5 flex flex-col gap-3">
+    <div class="flex items-center justify-between border-b border-b-gray-300 pb-5">
+      <p class="text-gray-500">Customer</p>
+      <p>{{ selectedSale()?.customerName ?? 'N/A' }}</p>
+    </div>
+
+    <div class="border-b border-b-gray-300 pb-5 flex flex-col gap-1.5">
+      @for(item of selectedSale()?.items; track $index){
+      <div class="flex items-center justify-between">
+        <p>{{ item.medicationName }} x {{ item.quantity }}</p>
+        <p>{{ item.total | currency : 'GHC' }}</p>
+      </div>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5 border-b border-b-gray-300 pb-5">
+      <div class="flex items-center justify-between">
+        <p>Subtotal</p>
+        <p>{{ selectedSale()?.subtotal | currency : 'GHC' }}</p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <p>Tax</p>
+        <p>{{ selectedSale()?.tax | currency : 'GHC' }}</p>
+      </div>
+
+      @if( (selectedSale()?.discount ?? 0) > 0){
+      <div class="flex items-center justify-between text-green-500">
+        <p>Discount</p>
+        <p>-{{ selectedSale()?.discount | currency : 'GHC' }}</p>
+      </div>
+      }
+    </div>
+
+    <div class="flex items-center justify-between text-lg font-semibold">
+      <p>Total</p>
+      <p>{{ selectedSale()?.total | currency : 'GHC' }}</p>
+    </div>
+  </div>
+</app-modal>

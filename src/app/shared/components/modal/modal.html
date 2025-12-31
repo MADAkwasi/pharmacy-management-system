@@ -16,6 +16,7 @@
         <p>{{ subtitle() }}</p>
       </div>
 
+      @if(hasXCloseButton()){
       <app-button
         title="Close Modal"
         variant="tertiary"
@@ -24,11 +25,20 @@
       >
         <lucide-icon [img]="icons.X" color="black" [size]="18" />
       </app-button>
+      }
     </div>
 
     <div class="px-5 my-5">
       <ng-content />
     </div>
+
+    @if(hasBottomCloseBtn()){
+    <div class="w-full border-t border-t-gray-300 py-5 px-8">
+      <app-button title="Close Modal" customStyles="w-full" (clickEvent)="handleModalClose()"
+        >Close</app-button
+      >
+    </div>
+    }
   </div>
 </div>
 
