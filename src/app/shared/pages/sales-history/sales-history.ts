@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Button } from '@shared/components/button/button';
 import { Modal } from '@shared/components/modal/modal';
 import { SalesForm } from '@shared/components/sales-form/sales-form';
@@ -14,5 +15,6 @@ import { LucideAngularModule, Plus, Search } from 'lucide-angular';
 })
 export class SalesHistory {
   protected readonly isModalOpen = signal(false);
+  protected readonly searchKeyword = signal(new FormControl(''));
   protected readonly icons = { Plus, Search };
 }

@@ -7,6 +7,7 @@ import { Funnel, LucideAngularModule, Plus, Search } from 'lucide-angular';
 import { Modal } from '@shared/components/modal/modal';
 import { SelectInput } from '@shared/components/select-input/select-input';
 import { MedicationForm } from '@shared/components/medication-form/medication-form';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inventory',
@@ -23,8 +24,9 @@ import { MedicationForm } from '@shared/components/medication-form/medication-fo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Inventory {
-  protected readonly icons = { Plus, Search, Funnel };
   protected readonly isModalOpen = signal(false);
+  protected readonly icons = { Plus, Search, Funnel };
+  protected readonly searchKeyword = signal(new FormControl(''));
   protected readonly categories = computed(() => [
     { label: 'All Categories', value: 'all' },
     ...new Set(
@@ -34,4 +36,5 @@ export class Inventory {
       }))
     ),
   ]);
+  protected readonly categoryFilter = signal(new FormControl(this.categories()[0].value));
 }

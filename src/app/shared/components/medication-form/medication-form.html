@@ -1,51 +1,96 @@
-<form class="flex flex-col gap-6 p-5">
+<form class="flex flex-col gap-6 p-5" [formGroup]="medicationForm">
   <div class="flex items-center justify-between gap-3">
     <div class="w-1/2">
-      <app-text-input placeholder="e.g., Paracetamol 500mg" label="Medication Name *" />
+      <app-text-input
+        placeholder="e.g., Paracetamol 500mg"
+        label="Medication Name *"
+        [control]="medicationForm.controls.medicationName"
+      />
     </div>
 
     <div class="w-1/2">
-      <app-text-input placeholder="e.g., Acetaminophen" label="Generic Name *" />
+      <app-text-input
+        placeholder="e.g., Acetaminophen"
+        label="Generic Name *"
+        [control]="medicationForm.controls.genericName"
+      />
     </div>
   </div>
 
   <div class="flex items-center justify-between gap-3">
     <div class="w-1/2">
-      <app-select-input label="Category *" [options]="options" />
+      <app-select-input
+        label="Category *"
+        [options]="options"
+        [control]="medicationForm.controls.category"
+      />
     </div>
 
     <div class="w-1/2">
-      <app-text-input placeholder="e.g., PharmaCorp" label="Manufacturer *" />
-    </div>
-  </div>
-
-  <div class="flex items-center justify-between gap-3">
-    <div class="w-1/2">
-      <app-text-input placeholder="e.g., PC-2024-001" label="Batch Number *" />
-    </div>
-
-    <div class="w-1/2">
-      <app-text-input placeholder="dd/mm/yyyy" type="date" label="Expiry Date *" />
+      <app-text-input
+        placeholder="e.g., PharmaCorp"
+        label="Manufacturer *"
+        [control]="medicationForm.controls.manufacturer"
+      />
     </div>
   </div>
 
   <div class="flex items-center justify-between gap-3">
     <div class="w-1/2">
-      <app-text-input placeholder="0" type="number" label="Quantity *" />
+      <app-text-input
+        placeholder="e.g., PC-2024-001"
+        label="Batch Number *"
+        [control]="medicationForm.controls.batchNumber"
+      />
     </div>
 
     <div class="w-1/2">
-      <app-text-input placeholder="0" type="number" label="Minimum Stock Level *" />
+      <app-text-input
+        placeholder="dd/mm/yyyy"
+        type="date"
+        label="Expiry Date *"
+        [control]="medicationForm.controls.expiryDate"
+      />
     </div>
   </div>
 
   <div class="flex items-center justify-between gap-3">
     <div class="w-1/2">
-      <app-text-input placeholder="0" type="number" label="Cost Price *" />
+      <app-text-input
+        placeholder="0"
+        type="number"
+        label="Quantity *"
+        [control]="medicationForm.controls.quantity"
+      />
     </div>
 
     <div class="w-1/2">
-      <app-text-input placeholder="0" type="number" label="Selling Price *" />
+      <app-text-input
+        placeholder="0"
+        type="number"
+        label="Minimum Stock Level *"
+        [control]="medicationForm.controls.minStockLevel"
+      />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="w-1/2">
+      <app-text-input
+        placeholder="0"
+        type="number"
+        label="Cost Price *"
+        [control]="medicationForm.controls.costPrice"
+      />
+    </div>
+
+    <div class="w-1/2">
+      <app-text-input
+        placeholder="0"
+        type="number"
+        label="Selling Price *"
+        [control]="medicationForm.controls.sellingPrice"
+      />
     </div>
   </div>
 
@@ -55,6 +100,7 @@
       placeholder="Add any additional notes..."
       rows="4"
       class="w-full px-4 py-3 rounded-lg focus:outline focus:outline-sidebar-bg border border-gray-300"
+      [formControl]="medicationForm.controls.description"
     ></textarea>
   </div>
 

@@ -11,7 +11,11 @@
   </div>
 
   <div class="w-2/5">
-    <app-text-input placeholder="Search by customer or invoice ID..." [icon]="icons.Search" />
+    <app-text-input
+      placeholder="Search by customer or invoice ID..."
+      [icon]="icons.Search"
+      [control]="searchKeyword()"
+    />
   </div>
 
   <app-sales-table />

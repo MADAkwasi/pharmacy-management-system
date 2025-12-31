@@ -12,7 +12,11 @@
 
   <div class="items-center justify-between flex">
     <div class="w-3/4">
-      <app-text-input placeholder="Search medications..." [icon]="icons.Search" />
+      <app-text-input
+        placeholder="Search medications..."
+        [icon]="icons.Search"
+        [control]="searchKeyword()"
+      />
     </div>
 
     <div class="w-1/5">
@@ -20,6 +24,7 @@
         [options]="categories()"
         [leftIcon]="icons.Funnel"
         [hasPlaceholder]="false"
+        [control]="categoryFilter()"
       />
     </div>
   </div>
