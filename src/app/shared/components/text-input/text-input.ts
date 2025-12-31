@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 
 @Component({
   selector: 'app-text-input',
   imports: [LucideAngularModule],
   templateUrl: './text-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextInput {
   public readonly placeholder = input.required<string>();

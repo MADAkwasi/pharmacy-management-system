@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Button } from '@shared/components/button/button';
 import { activatedUsersTableColumn, deactivatedUsersTableColumn } from '@shared/constants/table';
 import { DEMO_USERS } from '@shared/constants/user';
@@ -9,6 +9,7 @@ import { LucideAngularModule, UserX } from 'lucide-angular';
   selector: 'app-user-table',
   imports: [Button, LucideAngularModule, DatePipe, CommonModule],
   templateUrl: './user-table.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserTable {
   public readonly type = input.required<'activated' | 'deactivated'>();

@@ -63,11 +63,10 @@
   [title]="'Invoice #' + selectedSale()?.id"
   [subtitle]="(selectedSale()?.createdAt | date : 'MMMM dd, yyyy hh:mm a') ?? ''"
   (closeModal)="handleToggleDetailModal()"
-  [hasBottomCloseBtn]="true"
   [hasXCloseButton]="false"
   [hasFixedHeader]="true"
 >
-  <div class="px-5 flex flex-col gap-3">
+  <div class="px-5 flex flex-col gap-3 p-5">
     <div class="flex items-center justify-between border-b border-b-gray-300 pb-5">
       <p class="text-gray-500">Customer</p>
       <p>{{ selectedSale()?.customerName ?? 'N/A' }}</p>
@@ -105,5 +104,11 @@
       <p>Total</p>
       <p>{{ selectedSale()?.total | currency : 'GHC' }}</p>
     </div>
+  </div>
+
+  <div class="w-full border-t border-t-gray-300 py-5 px-8">
+    <app-button title="Close Modal" customStyles="w-full" (clickEvent)="handleToggleDetailModal()"
+      >Close</app-button
+    >
   </div>
 </app-modal>

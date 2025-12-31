@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SelectOption } from '@shared/models/user';
 import { ChevronDown, LucideAngularModule, LucideIconData } from 'lucide-angular';
 
@@ -6,6 +6,7 @@ import { ChevronDown, LucideAngularModule, LucideIconData } from 'lucide-angular
   selector: 'app-select-input',
   imports: [LucideAngularModule],
   templateUrl: './select-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectInput {
   public readonly options = input.required<SelectOption[]>();

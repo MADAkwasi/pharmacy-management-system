@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-button',
   imports: [CommonModule],
   templateUrl: './button.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Button {
   public readonly title = input.required<string>();

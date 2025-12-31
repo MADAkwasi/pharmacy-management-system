@@ -16,3 +16,13 @@
 
   <app-sales-table />
 </main>
+
+<app-modal
+  [isModalOpen]="isModalOpen()"
+  title="New Sale"
+  [hasFixedHeader]="true"
+  (closeModal)="isModalOpen.set(false)"
+  modalWidth="w-[55%]"
+>
+  <app-sales-form />
+</app-modal>

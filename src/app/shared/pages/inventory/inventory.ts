@@ -1,5 +1,5 @@
 import { mockMedications } from '@shared/constants/medication';
-import { Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { Button } from '@shared/components/button/button';
 import { InventoryTable } from '@shared/components/inventory-table/inventory-table';
 import { TextInput } from '@shared/components/text-input/text-input';
@@ -20,6 +20,7 @@ import { MedicationForm } from '@shared/components/medication-form/medication-fo
     MedicationForm,
   ],
   templateUrl: './inventory.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Inventory {
   protected readonly icons = { Plus, Search, Funnel };
