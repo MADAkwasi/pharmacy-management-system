@@ -1,0 +1,64 @@
+<main class="px-10 py-8 flex gap-8">
+  <div class="w-2/3 flex flex-col gap-4">
+    <app-text-input
+      placeholder="Search medication by name..."
+      [control]="searchKeyword()"
+      [icon]="icons.Search"
+    />
+    <ul class="flex w-full overflow-x-auto gap-2 items-center">
+      @for(category of categories(); track $index){
+      <li>
+        <button
+          [title]="category"
+          class="capitalize rounded-3xl px-4 py-1.5 border border-gray-300 transition-all duration-300 hover:cursor-pointer hover:bg-gray-200"
+          [ngClass]="{
+            'text-white, bg-sidebar-bg hover:bg-sidebar-bg': category === selectedCategory(),
+            'text-black, bg-white': category !== selectedCategory()
+          }"
+          (click)="selectedCategory.set(category)"
+        >
+          {{ category }}
+        </button>
+      </li>
+      }
+    </ul>
+
+    <div class="grid grid-cols-4 gap-2 items-center my-2">
+      @for(medication of filteredMedications(); track medication.id){
+      <div
+        class="hover:cursor-pointer border-2 border-transparent transition-all duration-300 hover:shadow-xl hover:border-sidebar-bg rounded-2xl active:scale-95 group"
+      >
+        <app-button [title]="medication.name" variant="tertiary" customStyles="p-0! w-full">
+          <span class="px-3 py-4 flex flex-col gap-3 w-full">
+            <div
+              class="flex items-center justify-center rounded-xl bg-sidebar-bg/10 w-1/3 p-3 transition-all duration-300 group-hover:bg-sidebar-bg group-hover:text-white"
+            >
+              <lucide-icon [img]="icons.Pill" [size]="25" />
+            </div>
+
+            <div class="text-left">
+              <p class="font-semibold">{{ medication.name }}</p>
+              <p class="text-sm text-gray-500">{{ medication.genericName }}</p>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <p class="text-green-600 text-lg font-bold">
+                {{ medication.unitPrice | currency : 'GHC' }}
+              </p>
+              <span
+                class="px-2 py-1 rounded-2xl text-xs text-nowrap"
+                [ngClass]="{
+                  'bg-green-100 text-green-500': medication.quantity >= medication.minStock,
+                  'bg-red-100 text-red-500': medication.quantity < medication.minStock
+                }"
+                >{{ medication.quantity }} left</span
+              >
+            </div>
+          </span>
+        </app-button>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="w-1/3"></div>
+</main>

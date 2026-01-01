@@ -28,6 +28,13 @@ export const APP_ROUTES: Routes = [
           import('@shared/pages/inventory/inventory').then((DEFAULT) => DEFAULT.Inventory),
       },
       {
+        path: 'point-of-sale',
+        loadComponent: () =>
+          import('@shared/pages/point-of-sale/point-of-sale').then(
+            (DEFAULT) => DEFAULT.PointOfSale
+          ),
+      },
+      {
         path: 'sales',
         loadComponent: () =>
           import('@shared/pages/sales-history/sales-history').then(
