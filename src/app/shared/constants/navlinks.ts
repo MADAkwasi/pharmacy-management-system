@@ -19,7 +19,7 @@ export const adminNavigation: DashboardNavigation[] = [
   },
   {
     label: 'Sales History',
-    route: '/sales-history',
+    route: '/sales',
     icon: ShoppingCart,
   },
   {

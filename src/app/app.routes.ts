@@ -27,6 +27,13 @@ export const APP_ROUTES: Routes = [
         loadComponent: () =>
           import('@shared/pages/inventory/inventory').then((DEFAULT) => DEFAULT.Inventory),
       },
+      {
+        path: 'sales',
+        loadComponent: () =>
+          import('@shared/pages/sales-history/sales-history').then(
+            (DEFAULT) => DEFAULT.SalesHistory
+          ),
+      },
     ],
   },
 ];

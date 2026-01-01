@@ -3,7 +3,10 @@
 <div
   class="w-screen h-screen absolute top-0 left-0 bg-[#0000005f] flex flex-col justify-center items-center"
 >
-  <div class="bg-white rounded-2xl w-2/5 pb-3 max-h-4/5 overflow-y-auto relative">
+  <div
+    class="bg-white rounded-2xl pb-3 max-h-4/5 overflow-y-auto relative"
+    [class]="modalWidth() ? modalWidth() : 'w-2/5'"
+  >
     <div
       class="flex justify-between items-start pt-4 px-5"
       [class.pb-4]="hasFixedHeader()"
@@ -16,6 +19,7 @@
         <p>{{ subtitle() }}</p>
       </div>
 
+      @if(hasXCloseButton()){
       <app-button
         title="Close Modal"
         variant="tertiary"
@@ -24,11 +28,10 @@
       >
         <lucide-icon [img]="icons.X" color="black" [size]="18" />
       </app-button>
+      }
     </div>
 
-    <div class="px-5 my-5">
-      <ng-content />
-    </div>
+    <ng-content />
   </div>
 </div>
 

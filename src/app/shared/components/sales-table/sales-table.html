@@ -1,0 +1,114 @@
+<div class="rounded-2xl border border-gray-300 overflow-hidden text-gray-500">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="border-b border-gray-200 text-left text-sm font-semibold">
+        @for(col of headCols; track $index){
+        <th class="py-3 px-4" [class.text-right]="col === 'Actions'">{{ col }}</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(sale of sales; track $index){
+      <tr class="border-b border-gray-100 text-sm hover:bg-gray-100 group">
+        <td class="py-3 px-4">#{{ sale.id }}</td>
+        <td class="py-3 px-4">{{ sale.customerName }}</td>
+        <td class="py-3 px-4">
+          {{ sale.items.length }}{{ sale.items.length > 1 ? ' items' : ' item' }}
+        </td>
+        <td class="py-3 px-4">
+          <span class="flex items-center gap-2">
+            <lucide-icon
+              [img]="
+                sale.paymentMethod === 'cash'
+                  ? icons.HandCoins
+                  : sale.paymentMethod === 'card'
+                  ? icons.CreditCard
+                  : icons.Smartphone
+              "
+              [size]="15"
+            />
+            <p class="capitalize">{{ sale.paymentMethod.replace('_', ' ') }}</p>
+          </span>
+        </td>
+        <td class="py-3 px-4 text-black font-semibold">{{ sale.total | currency : 'GHC' }}</td>
+        <td class="py-3 px-4">{{ sale.createdAt | date : 'MMM dd, yyyy hh:mm a' }}</td>
+
+        <td class="py-3 px-4">
+          <span>
+            <span class="px-2 py-1 rounded-2xl text-xs text-nowrap bg-green-100 text-green-400">
+              {{ sale.status }}
+            </span>
+          </span>
+        </td>
+        <td class="py-3 px-4">
+          <div class="flex justify-end">
+            <app-button
+              title="View Details"
+              variant="tertiary"
+              (clickEvent)="handleToggleDetailModal(sale)"
+            >
+              <lucide-icon [img]="icons.Eye" [size]="15" color="#99a1af" />
+            </app-button>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-modal
+  [isModalOpen]="isDetailsModalOpen()"
+  [title]="'Invoice #' + selectedSale()?.id"
+  [subtitle]="(selectedSale()?.createdAt | date : 'MMMM dd, yyyy hh:mm a') ?? ''"
+  (closeModal)="handleToggleDetailModal()"
+  [hasXCloseButton]="false"
+  [hasFixedHeader]="true"
+>
+  <div class="px-5 flex flex-col gap-3 p-5">
+    <div class="flex items-center justify-between border-b border-b-gray-300 pb-5">
+      <p class="text-gray-500">Customer</p>
+      <p>{{ selectedSale()?.customerName ?? 'N/A' }}</p>
+    </div>
+
+    <div class="border-b border-b-gray-300 pb-5 flex flex-col gap-1.5">
+      @for(item of selectedSale()?.items; track $index){
+      <div class="flex items-center justify-between">
+        <p>{{ item.medicationName }} x {{ item.quantity }}</p>
+        <p>{{ item.total | currency : 'GHC' }}</p>
+      </div>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5 border-b border-b-gray-300 pb-5">
+      <div class="flex items-center justify-between">
+        <p>Subtotal</p>
+        <p>{{ selectedSale()?.subtotal | currency : 'GHC' }}</p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <p>Tax</p>
+        <p>{{ selectedSale()?.tax | currency : 'GHC' }}</p>
+      </div>
+
+      @if( (selectedSale()?.discount ?? 0) > 0){
+      <div class="flex items-center justify-between text-green-500">
+        <p>Discount</p>
+        <p>-{{ selectedSale()?.discount | currency : 'GHC' }}</p>
+      </div>
+      }
+    </div>
+
+    <div class="flex items-center justify-between text-lg font-semibold">
+      <p>Total</p>
+      <p>{{ selectedSale()?.total | currency : 'GHC' }}</p>
+    </div>
+  </div>
+
+  <div class="w-full border-t border-t-gray-300 py-5 px-8">
+    <app-button title="Close Modal" customStyles="w-full" (clickEvent)="handleToggleDetailModal()"
+      >Close</app-button
+    >
+  </div>
+</app-modal>

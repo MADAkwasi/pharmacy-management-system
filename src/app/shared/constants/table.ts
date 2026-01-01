@@ -19,3 +19,14 @@ export const inventoryTableColumn = [
   'Status',
   'Actions',
 ];
+
+export const salesTableColumn = [
+  'Invoice ID',
+  'Customer',
+  'Items',
+  'Payment',
+  'Total',
+  'Date',
+  'Status',
+  'Actions',
+];

@@ -1,0 +1,166 @@
+<form class="flex flex-col gap-4 relative" [formGroup]="saleForm">
+  <div class="flex gap-6 p-5">
+    <div class="w-1/2 flex flex-col gap-5">
+      <h6 class="font-semibold">Items</h6>
+
+      <div class="relative">
+        <app-text-input
+          placeholder="Search medications..."
+          [icon]="icons.Search"
+          [control]="medicationKeywordControl"
+        />
+
+        @if(filteredSearch().length > 0){
+        <ul
+          class="max-h-40 overflow-y-auto rounded-xl absolute top-15 left-0 w-full bg-white border border-sidebar-bg"
+        >
+          @for(medication of filteredSearch(); track medication.medicationId){
+          <li class="hover:bg-gray-200">
+            <app-button
+              variant="tertiary"
+              [title]="medication.medicationName"
+              customStyles="w-full justify-between!"
+              (clickEvent)="handleSelectMedication(medication)"
+            >
+              <span class="text-left">
+                <p>{{ medication.medicationName }}</p>
+                <p class="text-xs text-gray-500">stock: {{ medication.quantity }}</p>
+              </span>
+
+              <p class="font-semibold text-green-500">
+                {{ medication.unitPrice | currency : 'GHC' }}
+              </p>
+            </app-button>
+          </li>
+          }
+        </ul>
+        }
+      </div>
+
+      @if(selectedMedications().length < 1){
+      <span
+        class="flex flex-col justify-center items-center border border-gray-300 rounded-2xl gap-1 border-dashed text-sm py-8"
+      >
+        <p>No items added yet</p>
+        <p>Click "Add Item" to start</p>
+      </span>
+      }@else{ @for(medication of selectedMedications(); track $index){
+
+      <div class="flex items-center justify-between py-2 px-3">
+        <span>
+          <p>{{ medication.medicationName }}</p>
+          <p class="text-xs text-gray-500">{{ medication.unitPrice | currency : 'GHC' }} each</p>
+        </span>
+
+        <span class="flex items-center gap-1">
+          <app-button
+            title="Reduce Quantity"
+            variant="tertiary"
+            (clickEvent)="handleSaleItemQuantity(medication.medicationId, 'minus')"
+          >
+            <lucide-icon [img]="icons.Minus" [size]="15" />
+          </app-button>
+
+          <p>{{ medication.quantity }}</p>
+
+          <app-button
+            title="Increase Quantity"
+            variant="tertiary"
+            (clickEvent)="handleSaleItemQuantity(medication.medicationId, 'add')"
+          >
+            <lucide-icon [img]="icons.Plus" [size]="15" />
+          </app-button>
+        </span>
+
+        <span class="flex items-center gap-2">
+          <p>{{ medication.unitPrice * medication.quantity | currency : 'GHC' }}</p>
+          <app-button
+            title="Cancel Sale"
+            variant="tertiary"
+            customStyles="!p-1"
+            (clickEvent)="handleRemoveSale(medication)"
+          >
+            <lucide-icon [img]="icons.X" [size]="13" color="red" />
+          </app-button>
+        </span>
+      </div>
+      } }
+    </div>
+    <div class="w-1/2 flex flex-col gap-5">
+      <h6>Customer</h6>
+      <app-select-input [options]="options()" [control]="saleForm.controls.customer" />
+
+      <div class="flex flex-col gap-2">
+        <p>Payment Method</p>
+
+        <div class="flex items-center gap-3 justify-between">
+          @for(method of paymentMethods; track $index){
+          <button
+            type="button"
+            [title]="method.replace('_', ' ')"
+            class="px-6 py-3 rounded-xl border text-sm font-medium transition-all capitalize flex items-center justify-center gap-2 hover:cursor-pointer"
+            [ngClass]="{
+              'bg-teal-600 text-white border-teal-600': selectedMethod() === method,
+              'bg-white text-gray-800 border-gray-300 hover:bg-gray-50': selectedMethod() !== method
+            }"
+            (click)="selectedMethod.set(method)"
+          >
+            <lucide-icon
+              [img]="
+                method === 'cash'
+                  ? icons.HandCoins
+                  : method === 'card'
+                  ? icons.CreditCard
+                  : icons.Smartphone
+              "
+              [size]="15"
+            />
+            <p>{{ method.replace('_', ' ') }}</p>
+          </button>
+          }
+        </div>
+      </div>
+
+      <app-text-input
+        placeholder="0"
+        label="Discount (GHC)"
+        type="number"
+        [control]="saleForm.controls.discount"
+      />
+
+      <div class="flex flex-col gap-4 px-3 py-2 rounded-xl bg-gray-100">
+        <div class="flex items-center justify-between">
+          <p>Subtotal</p>
+          <p>{{ subTotal() | currency : 'GHC' }}</p>
+        </div>
+        <div class="flex items-center justify-between">
+          <p>Tax (8%)</p>
+          <p>{{ tax() | currency : 'GHC' }}</p>
+        </div>
+        <div
+          class="flex items-center justify-between border-t border-t-gray-300 py-2 text-lg font-bold"
+        >
+          <p>Total</p>
+          <p>{{ total() | currency : 'GHC' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex justify-between items-center pt-5 px-5 pb-3 border-t gap-3 border-t-gray-300 sticky bottom-0 left-0 bg-white"
+  >
+    <div class="w-2/5">
+      <app-button title="Cancel" customStyles="w-full" variant="secondary">Cancel</app-button>
+    </div>
+    <div class="w-fit">
+      <app-button title="Print" customStyles="w-full" variant="secondary">
+        <lucide-icon [img]="icons.Printer" [size]="15" />
+        <p>Print</p>
+      </app-button>
+    </div>
+    <div class="w-2/5">
+      <app-button title="Complete Sale" customStyles="w-full">Complete Sale</app-button>
+    </div>
+  </div>
+</form>
