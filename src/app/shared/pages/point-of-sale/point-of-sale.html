@@ -2,7 +2,7 @@
   <div class="w-2/3 flex flex-col gap-4">
     <app-text-input
       placeholder="Search medication by name..."
-      [control]="searchKeyword()"
+      [control]="searchMedicationKeyword()"
       [icon]="icons.Search"
     />
     <ul class="flex w-full overflow-x-auto gap-2 items-center">
@@ -10,10 +10,10 @@
       <li>
         <button
           [title]="category"
-          class="capitalize rounded-3xl px-4 py-1.5 border border-gray-300 transition-all duration-300 hover:cursor-pointer hover:bg-gray-200"
+          class="capitalize rounded-3xl text-nowrap px-4 py-1.5 border border-gray-300 transition-all duration-300 hover:cursor-pointer"
           [ngClass]="{
-            'text-white, bg-sidebar-bg hover:bg-sidebar-bg': category === selectedCategory(),
-            'text-black, bg-white': category !== selectedCategory()
+            'bg-sidebar-bg text-white': category === selectedCategory(),
+            'text-black bg-white hover:bg-gray-200': category !== selectedCategory()
           }"
           (click)="selectedCategory.set(category)"
         >
@@ -28,7 +28,12 @@
       <div
         class="hover:cursor-pointer border-2 border-transparent transition-all duration-300 hover:shadow-xl hover:border-sidebar-bg rounded-2xl active:scale-95 group"
       >
-        <app-button [title]="medication.name" variant="tertiary" customStyles="p-0! w-full">
+        <app-button
+          [title]="medication.name"
+          variant="tertiary"
+          customStyles="p-0! w-full"
+          (clickEvent)="handleSelectSale(medication)"
+        >
           <span class="px-3 py-4 flex flex-col gap-3 w-full">
             <div
               class="flex items-center justify-center rounded-xl bg-sidebar-bg/10 w-1/3 p-3 transition-all duration-300 group-hover:bg-sidebar-bg group-hover:text-white"
@@ -42,7 +47,7 @@
             </div>
 
             <div class="flex items-center justify-between">
-              <p class="text-green-600 text-lg font-bold">
+              <p class="text-sidebar-accent text-lg font-bold">
                 {{ medication.unitPrice | currency : 'GHC' }}
               </p>
               <span
@@ -60,5 +65,130 @@
       }
     </div>
   </div>
-  <div class="w-1/3"></div>
+  <div class="w-1/3 h-screen rounded-2xl border border-gray-300 shadow-lg flex flex-col">
+    <div class="py-4 px-5 border-b border-gray-300">
+      <app-text-input
+        placeholder="Search customer..."
+        [control]="searchCustomerKeyword()"
+        [icon]="icons.User"
+      />
+    </div>
+
+    <div
+      class="flex flex-col flex-1 items-center overflow-y-auto p-3"
+      [class.justify-center]="selectedMedications().length < 1"
+      [class.gap-3]="selectedMedications().length > 0"
+    >
+      @if(selectedMedications().length<1){
+      <lucide-icon [img]="icons.ShoppingCart" [size]="65" color="#d1d5dc" />
+      <span class="flex flex-col gap-1 text-gray-500 text-center my-4">
+        <p>Shopping cart is empty</p>
+        <p class="text-sm">Tap product to add</p>
+      </span>
+      }@else{ @for(medication of selectedMedications(); track $index){
+
+      <div class="flex items-center justify-between py-2 px-3 bg-gray-100 rounded-xl w-full">
+        <span>
+          <p class="text-sm">{{ medication.medicationName }}</p>
+          <p class="text-xs text-gray-500">{{ medication.unitPrice | currency : 'GHC' }} each</p>
+        </span>
+
+        <span class="flex items-center gap-1">
+          <app-button
+            title="Reduce Quantity"
+            variant="tertiary"
+            (clickEvent)="handleSaleItemQuantity(medication.medicationId, 'minus')"
+          >
+            <lucide-icon [img]="icons.Minus" [size]="15" />
+          </app-button>
+
+          <p>{{ medication.quantity }}</p>
+
+          <app-button
+            title="Increase Quantity"
+            variant="tertiary"
+            (clickEvent)="handleSaleItemQuantity(medication.medicationId, 'add')"
+          >
+            <lucide-icon [img]="icons.Plus" [size]="15" />
+          </app-button>
+        </span>
+
+        <span class="flex items-center gap-1 flex-col">
+          <p class="font-bold">
+            {{ medication.unitPrice * medication.quantity | currency : 'GHC' }}
+          </p>
+          <app-button
+            title="Cancel Sale"
+            variant="tertiary"
+            customStyles="!p-0"
+            (clickEvent)="handleRemoveSale(medication)"
+          >
+            <p class="text-red-500 text-xs">Remove</p>
+          </app-button>
+        </span>
+      </div>
+      } }
+    </div>
+
+    <div class="mt-auto border-t border-t-gray-300 flex flex-col px-5 py-3 gap-3">
+      <span class="flex items-center justify-between text-gray-500 text-sm">
+        <p>Subtotal</p>
+        <p>{{ subTotal() | currency : 'GHC' }}</p>
+      </span>
+      <span class="flex items-center justify-between text-gray-500 text-sm">
+        <p>Tax (8%)</p>
+        <p>{{ tax() | currency : 'GHC' }}</p>
+      </span>
+      <span
+        class="flex items-center justify-between font-bold text-lg border-t border-t-gray-300 py-2"
+      >
+        <p>Total</p>
+        <p class="text-sidebar-accent">{{ total() | currency : 'GHC' }}</p>
+      </span>
+
+      <div class="flex items-center gap-3 justify-between">
+        @for(method of paymentMethods; track $index){
+        <button
+          type="button"
+          [title]="method.replace('_', ' ')"
+          class="px-6 py-3 rounded-xl border-2 text-sm font-medium transition-all capitalize flex flex-col items-center justify-center gap-2 hover:cursor-pointer"
+          [ngClass]="{
+            'bg-sidebar-bg/20 text-sidebar-bg border-sidebar-bg': selectedMethod() === method,
+            'bg-white text-gray-800 border-gray-300 hover:border-sidebar-bg hover:text-sidebar-bg':
+              selectedMethod() !== method
+          }"
+          (click)="selectedMethod.set(method)"
+        >
+          <lucide-icon
+            [img]="
+              method === 'cash'
+                ? icons.HandCoins
+                : method === 'card'
+                ? icons.CreditCard
+                : icons.Smartphone
+            "
+            [size]="20"
+          />
+          <p>{{ method.replace('_', ' ') }}</p>
+        </button>
+        }
+      </div>
+
+      <div class="flex items-center gap-3 my-3">
+        <div class="w-1/2">
+          <app-button title="Empty Shopping Cart" variant="secondary" customStyles="w-full">
+            <lucide-icon [img]="icons.Trash2" />
+            <p>Clear</p>
+          </app-button>
+        </div>
+
+        <div class="w-1/2">
+          <app-button title="Make Payment" customStyles="w-full">
+            <lucide-icon [img]="icons.Check" />
+            <p>Pay {{ total() | currency : 'GHC' }}</p>
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>

@@ -94,13 +94,7 @@ export class SalesForm {
       })
       .filter((v): v is { med: Medication; score: number } => v !== null)
       .sort((a, b) => b.score - a.score)
-      .map(({ med }) => ({
-        medicationId: med.id,
-        medicationName: med.name,
-        quantity: 1,
-        unitPrice: med.unitPrice,
-        total: med.unitPrice,
-      }));
+      .map((result) => result.med);
   });
 
   protected readonly subTotal = computed(() =>
@@ -113,11 +107,19 @@ export class SalesForm {
 
   protected readonly total = computed(() => this.subTotal() + this.tax() - (this.discount() ?? 0));
 
-  protected handleSelectMedication(item: SaleItem): void {
+  protected handleSelectMedication(item: Medication): void {
+    const saleItem: SaleItem = {
+      medicationId: item.id,
+      medicationName: item.name,
+      quantity: 1,
+      unitPrice: item.unitPrice,
+      total: item.unitPrice,
+    };
+
     this.medicationKeywordControl.setValue('');
 
     this.selectedMedications.update((meds) =>
-      meds.some((m) => m.medicationId === item.medicationId) ? meds : [...meds, item]
+      meds.some((m) => m.medicationId === saleItem.medicationId) ? meds : [...meds, saleItem]
     );
   }
 
