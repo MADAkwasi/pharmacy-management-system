@@ -1,10 +1,19 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  viewChildren,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Sale } from '@core/services/sale/sale';
 import { Button } from '@shared/components/button/button';
 import { TextInput } from '@shared/components/text-input/text-input';
-import { mockMedications } from '@shared/constants/medication';
 import { Medication } from '@shared/models/medication';
+import { mockMedications } from '@shared/constants/medication';
 import { PaymentMethod, SaleItem } from '@shared/models/sales';
 import {
   Check,
@@ -19,7 +28,10 @@ import {
   Smartphone,
   Trash2,
   User,
+  X,
 } from 'lucide-angular';
+import { mockCustomers } from '@shared/constants/customer';
+import { Customer } from '@shared/models/customer';
 
 @Component({
   selector: 'app-point-of-sale',
@@ -27,13 +39,17 @@ import {
   templateUrl: './point-of-sale.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PointOfSale {
+export class PointOfSale implements OnInit {
+  private readonly saleService = inject(Sale);
+  private readonly textInputs = viewChildren<TextInput>(TextInput);
+  protected readonly selectedMedications = this.saleService.selectedMedications;
+  protected readonly medications = this.saleService.medications;
   protected readonly searchMedicationKeyword = signal(new FormControl(''));
   protected readonly searchCustomerKeyword = signal(new FormControl(''));
+  protected readonly customers = mockCustomers;
+  protected readonly selectedCustomer = signal<Customer | null>(null);
   protected readonly paymentMethods: PaymentMethod[] = ['cash', 'card', 'mobile_money'];
   protected readonly selectedMethod = signal<PaymentMethod>('cash');
-  protected readonly selectedMedications = signal<SaleItem[]>([]);
-  protected readonly medications = signal(mockMedications);
   protected readonly selectedCategory = signal('All');
   protected readonly icons = {
     Search,
@@ -47,10 +63,9 @@ export class PointOfSale {
     Check,
     Plus,
     Minus,
+    X,
   };
-  protected readonly subTotal = computed(() =>
-    this.selectedMedications().reduce((sum, item) => sum + item.total, 0)
-  );
+  protected readonly subTotal = this.saleService.subTotal;
   protected readonly tax = computed(() => this.subTotal() * 0.08);
 
   protected readonly total = computed(() => this.subTotal() + this.tax());
@@ -63,58 +78,34 @@ export class PointOfSale {
     return this.medications().filter((med) => med.category === this.selectedCategory());
   });
 
-  protected handleSelectSale(item: Medication): void {
-    if (this.selectedMedications().some((m) => m.medicationId === item.id)) return;
+  ngOnInit(): void {
+    this.saleService.initMedications(mockMedications);
+  }
 
-    const saleItem: SaleItem = {
-      medicationId: item.id,
-      medicationName: item.name,
-      quantity: 1,
-      unitPrice: item.unitPrice,
-      total: item.unitPrice,
-    };
-
-    this.medications.update((meds) =>
-      meds.map((med) => (med.id === item.id ? { ...med, quantity: med.quantity - 1 } : med))
+  protected handleSelectCustomer(customer: Customer | null) {
+    this.selectedCustomer.set(customer);
+    this.searchCustomerKeyword().setValue(customer?.name ?? '');
+    const customerInput = this.textInputs().find(
+      (input) => input.placeholder() === 'Search customer...'
     );
 
-    this.selectedMedications.update((meds) => [...meds, saleItem]);
+    customerInput?.blur();
+  }
+
+  protected handleClearCustomer(): void {
+    this.selectedCustomer.set(null);
+    this.searchCustomerKeyword().setValue('');
+  }
+
+  protected handleSelectSale(item: Medication): void {
+    this.saleService.addMedication(item);
   }
 
   protected handleRemoveSale(item: SaleItem): void {
-    this.selectedMedications.update((meds) =>
-      meds.filter((m) => m.medicationId !== item.medicationId)
-    );
+    this.saleService.removeSaleItem(item);
   }
 
   protected handleSaleItemQuantity(medicationId: string, operation: 'add' | 'minus'): void {
-    this.selectedMedications.update((meds) =>
-      meds
-        .map((med) => {
-          if (med.medicationId !== medicationId) return med;
-
-          const quantity = operation === 'add' ? med.quantity + 1 : med.quantity - 1;
-
-          return {
-            ...med,
-            quantity,
-            total: quantity * med.unitPrice,
-          };
-        })
-        .filter((med) => med.quantity > 0)
-    );
-
-    this.medications.update((meds) =>
-      meds.map((med) => {
-        if (med.id !== medicationId) return med;
-
-        const inventoryChange = operation === 'add' ? -1 : +1;
-
-        return {
-          ...med,
-          quantity: med.quantity + inventoryChange,
-        };
-      })
-    );
+    this.saleService.changeSaleItemQuantity(medicationId, operation);
   }
 }
