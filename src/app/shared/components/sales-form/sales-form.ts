@@ -1,5 +1,12 @@
 import { PaymentMethod, SaleItem } from './../../models/sales';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,6 +27,7 @@ import { mockCustomers } from '@shared/constants/customer';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { TextInput } from '../text-input/text-input';
 import { mockMedications } from '@shared/constants/medication';
+import { Sale } from '@core/services/sale/sale';
 
 type Medication = (typeof mockMedications)[number];
 
@@ -37,8 +45,9 @@ type Medication = (typeof mockMedications)[number];
   templateUrl: './sales-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SalesForm {
+export class SalesForm implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly saleService = inject(Sale);
   protected readonly icons = {
     Plus,
     Minus,
@@ -49,8 +58,8 @@ export class SalesForm {
     Search,
     X,
   };
-  protected readonly medications = mockMedications;
-  protected readonly selectedMedications = signal<SaleItem[]>([]);
+  protected readonly medications = this.saleService.medications;
+  protected readonly selectedMedications = this.saleService.selectedMedications;
   protected readonly paymentMethods: PaymentMethod[] = ['cash', 'card', 'mobile_money'];
   protected readonly selectedMethod = signal<PaymentMethod>('cash');
 
@@ -78,7 +87,7 @@ export class SalesForm {
     const keyword = this.medicationKeyword()?.trim().toLowerCase();
     if (!keyword) return [];
 
-    return this.medications
+    return this.medications()
       .map((med) => {
         const name = med.name.toLowerCase();
         const generic = med.genericName?.toLowerCase() ?? '';
@@ -94,54 +103,31 @@ export class SalesForm {
       })
       .filter((v): v is { med: Medication; score: number } => v !== null)
       .sort((a, b) => b.score - a.score)
-      .map(({ med }) => ({
-        medicationId: med.id,
-        medicationName: med.name,
-        quantity: 1,
-        unitPrice: med.unitPrice,
-        total: med.unitPrice,
-      }));
+      .map((result) => result.med);
   });
 
-  protected readonly subTotal = computed(() =>
-    this.selectedMedications().reduce((sum, item) => sum + item.total, 0)
-  );
-  protected readonly tax = computed(() => this.subTotal() * 0.08); // example 8%
+  protected readonly subTotal = this.saleService.subTotal;
+  protected readonly tax = computed(() => this.subTotal() * 0.08);
   protected readonly discount = toSignal(this.saleForm.controls.discount.valueChanges, {
     initialValue: this.saleForm.controls.discount.value ?? 0,
   });
 
   protected readonly total = computed(() => this.subTotal() + this.tax() - (this.discount() ?? 0));
 
-  protected handleSelectMedication(item: SaleItem): void {
-    this.medicationKeywordControl.setValue('');
+  ngOnInit(): void {
+    this.saleService.initMedications(mockMedications);
+  }
 
-    this.selectedMedications.update((meds) =>
-      meds.some((m) => m.medicationId === item.medicationId) ? meds : [...meds, item]
-    );
+  protected handleSelectMedication(item: Medication): void {
+    this.saleService.addMedication(item);
+    this.medicationKeywordControl.setValue('');
   }
 
   protected handleRemoveSale(item: SaleItem): void {
-    this.selectedMedications.update((meds) =>
-      meds.filter((m) => m.medicationId !== item.medicationId)
-    );
+    this.saleService.removeSaleItem(item);
   }
 
   protected handleSaleItemQuantity(medicationId: string, operation: 'add' | 'minus'): void {
-    this.selectedMedications.update((meds) =>
-      meds
-        .map((med) => {
-          if (med.medicationId !== medicationId) return med;
-
-          const quantity = operation === 'add' ? med.quantity + 1 : med.quantity - 1;
-
-          return {
-            ...med,
-            quantity,
-            total: quantity * med.unitPrice,
-          };
-        })
-        .filter((med) => med.quantity > 0)
-    );
+    this.saleService.changeSaleItemQuantity(medicationId, operation);
   }
 }

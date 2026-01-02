@@ -14,16 +14,16 @@
         <ul
           class="max-h-40 overflow-y-auto rounded-xl absolute top-15 left-0 w-full bg-white border border-sidebar-bg"
         >
-          @for(medication of filteredSearch(); track medication.medicationId){
+          @for(medication of filteredSearch(); track medication.id){
           <li class="hover:bg-gray-200">
             <app-button
               variant="tertiary"
-              [title]="medication.medicationName"
+              [title]="medication.name"
               customStyles="w-full justify-between!"
               (clickEvent)="handleSelectMedication(medication)"
             >
               <span class="text-left">
-                <p>{{ medication.medicationName }}</p>
+                <p>{{ medication.name }}</p>
                 <p class="text-xs text-gray-500">stock: {{ medication.quantity }}</p>
               </span>
 
