@@ -1,0 +1,14 @@
+<main class="px-10 py-8 flex flex-col gap-8">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-3xl font-bold">Reports & Analytics</h2>
+    <p class="text-gray-500">Insights into your pharmacy performance</p>
+  </div>
+
+  <section class="flex flex-col gap-8">
+    <div class="grid grid-cols-2 gap-6 items-stretch">
+      <app-sales-trend-data-chart />
+      <app-inventory-data-chart />
+    </div>
+    <app-top-selling-data-chart />
+  </section>
+</main>

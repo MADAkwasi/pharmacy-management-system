@@ -18,6 +18,11 @@ export const ADMIN_ROUTES: Routes = [
           ),
       },
       {
+        path: 'reports',
+        loadComponent: () =>
+          import('./presentation/pages/reports/reports').then((DEFAULT) => DEFAULT.Reports),
+      },
+      {
         path: 'settings',
         loadComponent: () =>
           import('./presentation/pages/settings/settings').then((DEFAULT) => DEFAULT.Settings),
