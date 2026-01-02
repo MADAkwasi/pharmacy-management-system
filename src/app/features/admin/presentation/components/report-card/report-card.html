@@ -1,0 +1,18 @@
+<div
+  class="w-full flex items-center justify-between border border-gray-300 rounded-2xl shadow-md transition-all duration-200 px-5 py-6 hover:bg-teal-100/20 hover:shadow-xl hover:-translate-y-0.5"
+>
+  <span>
+    <h6>{{ title() }}</h6>
+    <p class="text-2xl font-bold">
+      {{ isCurrency() ? (summary() | currency : 'GHC') : summary() }}
+    </p>
+  </span>
+
+  <span
+    class="px-3 py-3 h-12 w-12 flex items-center justify-center rounded-xl"
+    [style.color]="iconColor()"
+    [style.backgroundColor]="bgColor()"
+  >
+    <lucide-icon [img]="icon()" [size]="25" />
+  </span>
+</div>
