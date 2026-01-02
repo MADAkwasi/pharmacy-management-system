@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { InventoryDataChart } from '../../components/inventory-data-chart/inventory-data-chart';
 import { SalesTrendDataChart } from '../../components/sales-trend-data-chart/sales-trend-data-chart';
 import { TopSellingDataChart } from '../../components/top-selling-data-chart/top-selling-data-chart';
 import { ReportCard } from '../../components/report-card/report-card';
-import { mockMedications } from '@shared/constants/medication';
 import { BadgeCent, Clock, Package, TrendingUp, TriangleAlert } from 'lucide-angular';
 import { AuditLogs } from '@shared/components/audit-logs/audit-logs';
 import { DatePipe } from '@angular/common';
+import { Sale } from '@core/services/sale/sale';
 
 @Component({
   selector: 'app-reports',
@@ -22,7 +22,8 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Reports {
-  private readonly medications = signal(mockMedications);
+  private readonly saleService = inject(Sale);
+  private readonly medications = this.saleService.medications;
   protected readonly icons = { BadgeCent, TrendingUp, Clock, TriangleAlert, Package };
   protected readonly lowStocks = computed(() =>
     this.medications().filter((med) => med.quantity < med.minStock)
