@@ -1,11 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 
 @Component({
   selector: 'app-report-card',
   imports: [LucideAngularModule, CurrencyPipe],
   templateUrl: './report-card.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportCard {
   public readonly title = input.required<string>();

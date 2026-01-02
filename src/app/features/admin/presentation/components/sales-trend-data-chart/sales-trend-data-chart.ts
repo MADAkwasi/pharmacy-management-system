@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { ChartOptions } from '@shared/models/chart';
 import { ChartComponent } from 'ng-apexcharts';
 
@@ -6,6 +6,7 @@ import { ChartComponent } from 'ng-apexcharts';
   selector: 'app-sales-trend-data-chart',
   imports: [ChartComponent],
   templateUrl: './sales-trend-data-chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SalesTrendDataChart implements OnInit {
   protected readonly chartOptions = signal<Partial<ChartOptions> | null>(null);

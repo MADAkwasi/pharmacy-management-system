@@ -1,0 +1,8 @@
+<div class="px-4 py-3 rounded-xl shadow-lg border border-gray-300 flex flex-col gap-3 h-full">
+  <div class="flex gap-3 items-center">
+    <lucide-icon [img]="icon()" [color]="iconColor()" [size]="20" />
+    <h6 class="font-bold">{{ title() }}</h6>
+  </div>
+
+  <ng-content />
+</div>

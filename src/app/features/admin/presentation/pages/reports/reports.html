@@ -38,5 +38,55 @@
       <app-inventory-data-chart />
     </div>
     <app-top-selling-data-chart />
+
+    <div class="grid grid-cols-2 gap-5 items-stretch">
+      <app-audit-logs title="Low Stock Items" [icon]="icons.Package" iconColor="#d08700">
+        <ul class="flex flex-col gap-3">
+          @for(item of lowStocks(); track item.id){
+          <li
+            class="flex items-center justify-between p-3 border border-yellow-600/20 bg-yellow-500/10 rounded-xl"
+          >
+            <span>
+              <p>{{ item.name }}</p>
+              <p class="text-gray-500 text-sm">Batch: {{ item.batchNumber }}</p>
+            </span>
+            <div>
+              <span
+                class="px-2 py-0.5 text-xs bg-yellow-400/20 text-yellow-600 rounded-xl my-1 inline-block"
+                >{{ item.quantity }} left</span
+              >
+              <p class="text-xs text-gray-500">Min: {{ item.minStock }}</p>
+            </div>
+          </li>
+          }
+        </ul>
+      </app-audit-logs>
+      <app-audit-logs
+        title="Expiring Soon (30 days) & Expired"
+        [icon]="icons.Clock"
+        iconColor="#fb2c36"
+      >
+        <ul class="flex flex-col gap-3">
+          @for(item of expiredLogs(); track item.id){
+          <li
+            class="flex items-center justify-between p-3 border border-red-600/20 bg-red-500/10 rounded-xl"
+          >
+            <span>
+              <p>{{ item.name }}</p>
+              <p class="text-gray-500 text-sm">Batch: {{ item.batchNumber }}</p>
+            </span>
+            <div class="text-right">
+              <span
+                class="px-2 py-0.5 text-xs bg-red-400/20 text-red-600 rounded-xl my-1 inline-block"
+                [class.line-through]="expired().includes(item)"
+                >{{ item.expiryDate | date : 'MMM dd, yyyy' }}</span
+              >
+              <p class="text-xs text-gray-500">{{ item.quantity }} units</p>
+            </div>
+          </li>
+          }
+        </ul>
+      </app-audit-logs>
+    </div>
   </section>
 </main>

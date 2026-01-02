@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { mockMedications } from '@shared/constants/medication';
 import { ChartOptions } from '@shared/models/chart';
 import { ChartComponent } from 'ng-apexcharts';
@@ -7,6 +7,7 @@ import { ChartComponent } from 'ng-apexcharts';
   selector: 'app-inventory-data-chart',
   imports: [ChartComponent],
   templateUrl: './inventory-data-chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventoryDataChart implements OnInit {
   private readonly categories = signal([...new Set(mockMedications.map((med) => med.category))]);
