@@ -16,7 +16,7 @@ export class TopSellingDataChart implements OnInit {
     this.chartOptions.set({
       series: [
         {
-          name: 'basic',
+          name: 'Quantity sold',
           data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380],
         },
       ],

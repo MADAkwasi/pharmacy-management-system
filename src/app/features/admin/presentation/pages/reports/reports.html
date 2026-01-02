@@ -5,6 +5,34 @@
   </div>
 
   <section class="flex flex-col gap-8">
+    <div class="grid grid-cols-4 gap-5 items-center">
+      <app-report-card
+        title="Total Revenue"
+        [summary]="582.86"
+        [isCurrency]="true"
+        [icon]="icons.BadgeCent"
+        iconColor="#00a63e"
+      />
+      <app-report-card
+        title="Avg. Transaction"
+        [summary]="97.14"
+        [isCurrency]="true"
+        [icon]="icons.TrendingUp"
+        iconColor="#2a9d90"
+      />
+      <app-report-card
+        title="Low Stock Alerts"
+        [summary]="lowStocks().length"
+        [icon]="icons.TriangleAlert"
+        iconColor="#d08700"
+      />
+      <app-report-card
+        title="Expiring Soon"
+        [summary]="expiringSoon().length"
+        [icon]="icons.Clock"
+        iconColor="#fb2c36"
+      />
+    </div>
     <div class="grid grid-cols-2 gap-6 items-stretch">
       <app-sales-trend-data-chart />
       <app-inventory-data-chart />

@@ -9,7 +9,7 @@ export const mockMedications: Medication[] = [
     category: 'Pain Relief',
     manufacturer: 'PharmaCorp',
     batchNumber: 'PC-2024-001',
-    expiryDate: '2025-06-15',
+    expiryDate: '2026-01-20', // expiring soon
     quantity: 500,
     minStock: 100,
     unitPrice: 5.99,
@@ -25,7 +25,7 @@ export const mockMedications: Medication[] = [
     category: 'Antibiotics',
     manufacturer: 'MediHealth',
     batchNumber: 'MH-2024-102',
-    expiryDate: '2025-03-20',
+    expiryDate: '2025-12-05', // expired
     quantity: 45,
     minStock: 50,
     unitPrice: 12.99,
@@ -41,7 +41,7 @@ export const mockMedications: Medication[] = [
     category: 'Pain Relief',
     manufacturer: 'HealthPlus',
     batchNumber: 'HP-2024-055',
-    expiryDate: '2025-01-10',
+    expiryDate: '2026-02-10', // safe (near-term)
     quantity: 200,
     minStock: 75,
     unitPrice: 7.49,
@@ -57,7 +57,7 @@ export const mockMedications: Medication[] = [
     category: 'Diabetes',
     manufacturer: 'DiaCare',
     batchNumber: 'DC-2024-033',
-    expiryDate: '2025-08-25',
+    expiryDate: '2026-06-30', // mid-term
     quantity: 30,
     minStock: 40,
     unitPrice: 15.99,
@@ -73,7 +73,7 @@ export const mockMedications: Medication[] = [
     category: 'Digestive',
     manufacturer: 'GastroMed',
     batchNumber: 'GM-2024-078',
-    expiryDate: '2025-04-30',
+    expiryDate: '2026-01-05', // expiring very soon
     quantity: 150,
     minStock: 60,
     unitPrice: 9.99,
@@ -89,7 +89,7 @@ export const mockMedications: Medication[] = [
     category: 'Cardiovascular',
     manufacturer: 'CardioHealth',
     batchNumber: 'CH-2024-021',
-    expiryDate: '2025-02-15',
+    expiryDate: '2027-03-15', // long-term
     quantity: 80,
     minStock: 50,
     unitPrice: 18.99,
