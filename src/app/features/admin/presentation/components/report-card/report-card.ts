@@ -10,6 +10,7 @@ import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 })
 export class ReportCard {
   public readonly title = input.required<string>();
+  public readonly subtitle = input('');
   public readonly summary = input.required<number>();
   public readonly icon = input.required<LucideIconData>();
   public readonly iconColor = input.required<string>();

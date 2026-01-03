@@ -1,1 +1,161 @@
-<p>home works!</p>
+<main class="px-10 py-8 flex flex-col gap-8">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-3xl font-bold">Dashboard</h2>
+    <p class="text-gray-500">Welcome back! Here's your pharmacy overview.</p>
+  </div>
+
+  <section class="flex flex-col gap-8">
+    <div class="grid grid-cols-6 gap-2 items-stretch">
+      <app-report-card
+        title="Total Revenue"
+        [summary]="582.86"
+        [isCurrency]="true"
+        [icon]="icons.BadgeCent"
+        iconColor="#00a63e"
+        subtitle="This month"
+      />
+      <app-report-card
+        title="Total Sales"
+        [summary]="97"
+        [icon]="icons.ShoppingCart"
+        iconColor="#2a9d90"
+        subtitle="Transactions"
+      />
+      <app-report-card
+        title="Low Stock Alerts"
+        [summary]="lowStocks().length"
+        [icon]="icons.TriangleAlert"
+        iconColor="#d08700"
+        subtitle="Items need reorder"
+      />
+      <app-report-card
+        title="Expiring Soon"
+        [summary]="expiringSoon().length"
+        [icon]="icons.Clock"
+        iconColor="#fb2c36"
+        subtitle="Within 30 days"
+      />
+      <app-report-card
+        title="Customers"
+        [summary]="expiringSoon().length"
+        [icon]="icons.Users"
+        iconColor="#6a7282"
+        subtitle="Registered"
+      />
+      <app-report-card
+        title="Medications"
+        [summary]="expiringSoon().length"
+        [icon]="icons.Pill"
+        iconColor="#6a7282"
+        subtitle="In inventory"
+      />
+    </div>
+    <div class="grid grid-cols-2 gap-6 items-stretch">
+      <app-sales-trend-data-chart />
+      <app-audit-logs
+        title="Alerts & Notifications"
+        [icon]="icons.TriangleAlert"
+        iconColor="#d08700"
+      >
+        <ul class="flex flex-col">
+          @for(item of lowStocks(); track item.id){
+          <li
+            class="flex items-start justify-between py-4 border-b border-gray-300 px-4"
+            [class.border-t]="$first"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="px-3 py-3 h-8 w-8 flex items-center justify-center rounded-xl text-yellow-600 bg-yellow-600/10"
+              >
+                <lucide-icon [img]="icons.TriangleAlert" [size]="16" />
+              </span>
+              <span>
+                <p>{{ item.name }}</p>
+                <p class="text-gray-500 text-sm">
+                  Only {{ item.quantity }} units left (min: {{ item.minStock }})
+                </p>
+              </span>
+            </div>
+            <span
+              class="px-2 py-0.5 text-xs bg-yellow-400/20 text-yellow-600 rounded-xl my-1 inline-block"
+              >Low Stock</span
+            >
+          </li>
+          } @for(item of expiringSoon(); track item.id){
+          <li
+            class="flex items-start justify-between py-4 border-b border-gray-300 px-4"
+            [class.border-b]="!$last"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="px-3 py-3 h-8 w-8 flex items-center justify-center rounded-xl text-red-600 bg-red-600/10"
+              >
+                <lucide-icon [img]="icons.TriangleAlert" [size]="16" />
+              </span>
+              <span>
+                <p>{{ item.name }}</p>
+                <p class="text-gray-500 text-sm">
+                  Expires on {{ item.expiryDate | date : 'MMM dd, yyyy' }}
+                </p>
+              </span>
+            </div>
+            <span
+              class="px-2 py-0.5 text-xs bg-red-400/20 text-red-600 rounded-xl my-1 inline-block"
+              >Expiring Soon</span
+            >
+          </li>
+          }
+        </ul>
+      </app-audit-logs>
+    </div>
+
+    <app-audit-logs title="Recent Sales" [icon]="icons.ReceiptCent" iconColor="#2a9d90">
+      <ul class="flex flex-col">
+        @for(sale of sales(); track sale.id){
+        <li
+          class="flex items-start justify-between py-4 border-b border-gray-300 px-4"
+          [class.border-b]="!$last"
+          [class.border-t]="$first"
+        >
+          <div class="flex items-center gap-3">
+            <span
+              class="px-3 py-3 h-8 w-8 flex items-center justify-center rounded-xl text-sidebar-accent bg-sidebar-accent/10"
+            >
+              <lucide-icon
+                [img]="
+                  sale.paymentMethod === 'cash'
+                    ? icons.HandCoins
+                    : sale.paymentMethod === 'card'
+                    ? icons.CreditCard
+                    : icons.Smartphone
+                "
+                [size]="18"
+              />
+            </span>
+            <span>
+              <p>{{ sale.customerName }}</p>
+              <ul class="text-gray-500 text-sm flex gap-7 items-center">
+                <li>
+                  {{
+                    sale.items.length === 1
+                      ? sale.items.length + ' item'
+                      : sale.items.length + ' items'
+                  }}
+                </li>
+                <li class="list-disc">{{ timeAgo(sale.createdAt) }}</li>
+              </ul>
+            </span>
+          </div>
+          <div>
+            <p class="font-bold">{{ sale.total | currency : 'GHC' }}</p>
+            <span
+              class="px-2 py-0.5 text-xs bg-sidebar-bg/20 text-sidebar-bg rounded-xl my-1 inline-block"
+              >Completed</span
+            >
+          </div>
+        </li>
+        }
+      </ul>
+    </app-audit-logs>
+  </section>
+</main>

@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
-import { mockMedications } from '@shared/constants/medication';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { Sale } from '@core/services/sale/sale';
 import { ChartOptions } from '@shared/models/chart';
 import { ChartComponent } from 'ng-apexcharts';
 
@@ -10,7 +17,8 @@ import { ChartComponent } from 'ng-apexcharts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopSellingDataChart implements OnInit {
-  private readonly medications = signal(mockMedications.map((med) => med.name).slice(0, 10));
+  private readonly saleService = inject(Sale);
+  private readonly medications = computed(() => this.saleService.medications().slice(0, 10));
   protected readonly chartOptions = signal<Partial<ChartOptions> | null>(null);
 
   ngOnInit(): void {
