@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { InventoryDataChart } from '../../components/inventory-data-chart/inventory-data-chart';
 import { SalesTrendDataChart } from '../../components/sales-trend-data-chart/sales-trend-data-chart';
 import { TopSellingDataChart } from '../../components/top-selling-data-chart/top-selling-data-chart';
@@ -7,6 +7,7 @@ import { BadgeCent, Clock, Package, TrendingUp, TriangleAlert } from 'lucide-ang
 import { AuditLogs } from '@shared/components/audit-logs/audit-logs';
 import { DatePipe } from '@angular/common';
 import { Sale } from '@core/services/sale/sale';
+import { mockMedications } from '@shared/constants/medication';
 
 @Component({
   selector: 'app-reports',
@@ -21,7 +22,7 @@ import { Sale } from '@core/services/sale/sale';
   templateUrl: './reports.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Reports {
+export class Reports implements OnInit {
   private readonly saleService = inject(Sale);
   private readonly medications = this.saleService.medications;
   protected readonly icons = { BadgeCent, TrendingUp, Clock, TriangleAlert, Package };
@@ -41,4 +42,8 @@ export class Reports {
     this.medications().filter((med) => new Date(med.expiryDate).getTime() < Date.now())
   );
   protected readonly expiredLogs = computed(() => [...this.expiringSoon(), ...this.expired()]);
+
+  ngOnInit(): void {
+    this.saleService.initMedications(mockMedications);
+  }
 }
