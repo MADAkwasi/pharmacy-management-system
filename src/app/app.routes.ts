@@ -41,6 +41,11 @@ export const APP_ROUTES: Routes = [
             (DEFAULT) => DEFAULT.SalesHistory
           ),
       },
+      {
+        path: 'customers',
+        loadComponent: () =>
+          import('@shared/pages/customers/customers').then((DEFAULT) => DEFAULT.Customers),
+      },
     ],
   },
 ];
