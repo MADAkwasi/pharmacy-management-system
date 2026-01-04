@@ -3,6 +3,11 @@ import { Dashboard } from '@core/layout/dashboard/dashboard';
 
 export const APP_ROUTES: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
     path: 'admin',
     loadChildren: () => import('@features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
@@ -52,5 +57,9 @@ export const APP_ROUTES: Routes = [
           import('@shared/pages/suppliers/suppliers').then((DEFAULT) => DEFAULT.Suppliers),
       },
     ],
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('@shared/pages/login/login').then((DEFAULT) => DEFAULT.Login),
   },
 ];

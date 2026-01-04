@@ -75,6 +75,7 @@
         variant="secondary"
         class="flex gap-2 items-center"
         customStyles="w-full justify-center hover:bg-white hover:!text-sidebar-bg"
+        (clickEvent)="onLogout()"
       >
         <lucide-icon [img]="icons.LogOut" color="#2a9d90" />
         <p>Logout</p>
