@@ -1,0 +1,51 @@
+<div
+  class="flex flex-col gap-3 rounded-xl border border-gray-300 px-4 py-5 hover:shadow-md transition-all duration-200"
+>
+  <div class="flex items-start justify-between">
+    <div class="flex gap-3 items-center">
+      <span
+        class="h-12 w-12 flex items-center justify-center font-bold text-lg rounded-xl bg-sidebar-accent/10 text-sidebar-accent"
+      >
+        <lucide-icon [img]="icons.Building2" [size]="25" />
+      </span>
+      <span class="flex flex-col gap-0.5">
+        <p class="font-semibold">{{ supplier().name }}</p>
+        <span class="text-gray-500 text-sm flex items-center gap-2">
+          <lucide-icon [img]="icons.User" [size]="15" />
+          <p>{{ supplier().contactPerson }}</p>
+        </span>
+      </span>
+    </div>
+    <div class="flex items-center gap-3 text-gray-500">
+      <app-button title="Edit supplier info" variant="tertiary" customStyles="!p-2">
+        <lucide-icon [img]="icons.Pen" [size]="14" />
+      </app-button>
+
+      <app-button title="Delete supplier" variant="tertiary" customStyles="!p-2">
+        <lucide-icon [img]="icons.Trash2" [size]="14" />
+      </app-button>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-2 gap-y-2 text-gray-500 mt-3 px-2 text-sm">
+    <li class="flex gap-3 items-center">
+      <lucide-icon [img]="icons.Mail" [size]="14" />
+      <p>{{ supplier().email }}</p>
+    </li>
+
+    <li class="flex gap-3 items-center">
+      <lucide-icon [img]="icons.Phone" [size]="14" />
+      <p>{{ supplier().phone }}</p>
+    </li>
+
+    <li class="flex gap-3 items-center">
+      <lucide-icon [img]="icons.MapPin" [size]="14" />
+      <p>{{ supplier().address }}</p>
+    </li>
+  </ul>
+
+  <div class="border-t border-t-gray-300 pt-4 mt-3 text-sm text-gray-500 flex items-center gap-2">
+    <lucide-icon [img]="icons.Clock" [size]="18" />
+    <p>{{ supplier().paymentTerms }}</p>
+  </div>
+</div>

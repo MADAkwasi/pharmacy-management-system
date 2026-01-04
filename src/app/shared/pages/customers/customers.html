@@ -4,7 +4,7 @@
       <h2 class="text-3xl font-bold">Customers</h2>
       <p class="text-gray-500">Manage customer information</p>
     </span>
-    <app-button title="Add Inventory" (clickEvent)="isModalOpen.set(true)">
+    <app-button title="Add Customer" (clickEvent)="isModalOpen.set(true)">
       <lucide-icon [img]="icons.Plus" color="white" />
       <p>Add Customer</p>
     </app-button>
@@ -30,7 +30,7 @@
   [hasFixedHeader]="true"
   (closeModal)="isModalOpen.set(false)"
 >
-  <form class="px-5 py-4 flex flex-col gap-3">
+  <form [formGroup]="customerForm" class="px-5 py-4 flex flex-col gap-3">
     <app-text-input
       label="Full Name *"
       placeholder="John Smith"
@@ -58,6 +58,7 @@
     <app-text-input
       label="Date of Birth *"
       placeholder="dd/mm/yyyy"
+      type="date"
       [control]="customerForm.controls.dateOfBirth"
     />
 
@@ -70,7 +71,7 @@
       >
         Cancel
       </app-button>
-      <app-button title="Create User" class="w-1/2" customStyles="w-full justify-center">
+      <app-button title="Add Customer" class="w-1/2" customStyles="w-full justify-center">
         Add Customer
       </app-button>
     </div>

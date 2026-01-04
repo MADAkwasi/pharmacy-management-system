@@ -46,6 +46,11 @@ export const APP_ROUTES: Routes = [
         loadComponent: () =>
           import('@shared/pages/customers/customers').then((DEFAULT) => DEFAULT.Customers),
       },
+      {
+        path: 'suppliers',
+        loadComponent: () =>
+          import('@shared/pages/suppliers/suppliers').then((DEFAULT) => DEFAULT.Suppliers),
+      },
     ],
   },
 ];
