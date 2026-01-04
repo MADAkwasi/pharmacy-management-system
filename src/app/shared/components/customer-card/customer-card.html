@@ -13,12 +13,12 @@
         <p class="text-gray-500 text-xs">Since {{ customer().createdAt | date : 'MMM yyyy' }}</p>
       </span>
     </div>
-    <div class="flex items-center gap-1 text-gray-500">
-      <app-button title="Edit customer info" variant="tertiary">
+    <div class="flex items-center gap-3 text-gray-500">
+      <app-button title="Edit customer info" variant="tertiary" customStyles="!p-2">
         <lucide-icon [img]="icons.Pen" [size]="14" />
       </app-button>
 
-      <app-button title="Delete customer" variant="tertiary">
+      <app-button title="Delete customer" variant="tertiary" customStyles="!p-2">
         <lucide-icon [img]="icons.Trash2" [size]="14" />
       </app-button>
     </div>

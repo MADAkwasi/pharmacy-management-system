@@ -1,37 +1,39 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Button } from '@shared/components/button/button';
-import { CustomerCard } from '@shared/components/customer-card/customer-card';
 import { Modal } from '@shared/components/modal/modal';
+import { SelectInput } from '@shared/components/select-input/select-input';
+import { SupplierCard } from '@shared/components/supplier-card/supplier-card';
 import { TextInput } from '@shared/components/text-input/text-input';
-import { mockCustomers } from '@shared/constants/customer';
+import { mockSuppliers, paymentTermsOptions } from '@shared/constants/supplier';
 import { LucideAngularModule, Plus, Search } from 'lucide-angular';
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-suppliers',
   imports: [
-    Button,
     LucideAngularModule,
+    Button,
     Modal,
     TextInput,
-    CustomerCard,
     ReactiveFormsModule,
-    TextInput,
+    SelectInput,
+    SupplierCard,
   ],
-  templateUrl: './customers.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './suppliers.html',
 })
-export class Customers {
+export class Suppliers {
   private readonly fb = inject(FormBuilder);
-  protected readonly customers = mockCustomers;
   protected readonly searchKeyword = signal(new FormControl(''));
   protected readonly isModalOpen = signal(false);
   protected readonly icons = { Plus, Search };
-  protected readonly customerForm = this.fb.group({
-    fullName: ['', [Validators.required]],
+  protected readonly termsOptions = paymentTermsOptions;
+  protected readonly suppliers = mockSuppliers;
+  protected readonly supplierForm = this.fb.group({
+    companyName: ['', [Validators.required]],
+    contactPerson: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required]],
     address: ['', [Validators.required]],
-    dateOfBirth: ['', [Validators.required]],
+    paymentTerms: ['net-15', [Validators.required]],
   });
 }

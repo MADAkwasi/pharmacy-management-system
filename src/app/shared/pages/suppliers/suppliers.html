@@ -1,0 +1,90 @@
+<main class="px-10 py-8 flex flex-col gap-8">
+  <div class="flex items-center justify-between">
+    <span>
+      <h2 class="text-3xl font-bold">Suppliers</h2>
+      <p class="text-gray-500">Manage your supplier network</p>
+    </span>
+    <app-button title="Add Supplier" (clickEvent)="isModalOpen.set(true)">
+      <lucide-icon [img]="icons.Plus" color="white" />
+      <p>Add Supplier</p>
+    </app-button>
+  </div>
+
+  <div class="w-2/5">
+    <app-text-input
+      placeholder="Search suppliers..."
+      [icon]="icons.Search"
+      [control]="searchKeyword()"
+    />
+  </div>
+
+  <div class="grid grid-cols-2 gap-5 items-stretch">
+    @for(supplier of suppliers; track $index){
+    <app-supplier-card [supplier]="supplier" />
+    }
+  </div>
+</main>
+<app-modal
+  title="Add New Supplier"
+  [isModalOpen]="isModalOpen()"
+  [hasFixedHeader]="true"
+  (closeModal)="isModalOpen.set(false)"
+>
+  <form [formGroup]="supplierForm" class="px-5 py-4 flex flex-col gap-3">
+    <app-text-input
+      label="Company Name *"
+      placeholder="PharmaCorp Distributors"
+      [control]="supplierForm.controls.companyName"
+    />
+
+    <app-text-input
+      label="Contact Person *"
+      placeholder="John Smith"
+      [control]="supplierForm.controls.contactPerson"
+    />
+
+    <app-text-input
+      label="Email *"
+      placeholder="contact@company.com"
+      [control]="supplierForm.controls.email"
+    />
+
+    <app-text-input
+      label="Phone *"
+      placeholder="+1 (555) 123-4567"
+      [control]="supplierForm.controls.phone"
+    />
+
+    <app-text-input
+      label="Address *"
+      placeholder="123 Main Street, New York, NY 10001"
+      [control]="supplierForm.controls.address"
+    />
+
+    <app-select-input
+      [options]="termsOptions"
+      [control]="supplierForm.controls.paymentTerms"
+      label="Payment Terms"
+      [hasPlaceholder]="false"
+    />
+
+    <div class="flex items-center gap-3 w-full mt-3">
+      <app-button
+        title="Cancel"
+        variant="secondary"
+        class="w-1/2"
+        customStyles="w-full justify-center"
+      >
+        Cancel
+      </app-button>
+      <app-button
+        title="Add Supplier"
+        class="w-1/2"
+        customStyles="w-full justify-center"
+        type="submit"
+      >
+        Add Supplier
+      </app-button>
+    </div>
+  </form>
+</app-modal>
