@@ -1,5 +1,13 @@
 import { DashboardNavigation } from '@shared/models/navlinks';
-import { ChartColumn, LayoutDashboard, Monitor, Pill, ShoppingCart, Van } from 'lucide-angular';
+import {
+  ChartColumn,
+  LayoutDashboard,
+  Monitor,
+  Pill,
+  ShoppingCart,
+  Users,
+  Van,
+} from 'lucide-angular';
 
 export const adminNavigation: DashboardNavigation[] = [
   {
@@ -21,6 +29,11 @@ export const adminNavigation: DashboardNavigation[] = [
     label: 'Sales History',
     route: '/sales',
     icon: ShoppingCart,
+  },
+  {
+    label: 'Customers',
+    route: '/customers',
+    icon: Users,
   },
   {
     label: 'Suppliers',
@@ -56,6 +69,11 @@ export const pharmacistNavigation: DashboardNavigation[] = [
     icon: ShoppingCart,
   },
   {
+    label: 'Customers',
+    route: '/customers',
+    icon: Users,
+  },
+  {
     label: 'Reports',
     route: '/pharmacist/reports',
     icon: ChartColumn,
@@ -72,5 +90,10 @@ export const salesAttendantNavigation: DashboardNavigation[] = [
     label: 'Sales History',
     route: '/sales-history',
     icon: ShoppingCart,
+  },
+  {
+    label: 'Customers',
+    route: '/customers',
+    icon: Users,
   },
 ];
