@@ -5,12 +5,12 @@
     <input
       #input
       [placeholder]="placeholder()"
-      [type]="type()"
+      [type]="resolvedType()"
       [min]="0"
       [formControl]="control()"
       class="w-full px-4 py-3 rounded-lg focus:outline focus:outline-sidebar-bg border border-gray-300"
       [class.pl-9]="iconPosition() === 'left' && icon()"
-      [class.pr-9]="iconPosition() === 'right' && icon()"
+      [class.pr-10]="(iconPosition() === 'right' && icon()) || type() === 'password'"
     />
 
     @if (icon()) {
@@ -22,6 +22,20 @@
       [class.left-2]="iconPosition() === 'left'"
       [class.right-2]="iconPosition() === 'right'"
     />
+    } @if (type()==='password') {
+    <app-button
+      [title]="isPasswordVisible() ? 'Hide password' : 'Show password'"
+      variant="tertiary"
+      customStyles="p-0!"
+      (clickEvent)="onTogglePasswordVisibility()"
+    >
+      <lucide-icon
+        [img]="isPasswordVisible() ? icons.Eye : icons.EyeClosed"
+        [size]="20"
+        color="#6a7282"
+        class="absolute top-1/2 -translate-y-1/2 right-2"
+      />
+    </app-button>
     }
   </div>
 </div>

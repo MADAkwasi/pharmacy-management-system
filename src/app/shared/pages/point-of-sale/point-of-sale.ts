@@ -6,7 +6,6 @@ import {
   inject,
   OnInit,
   signal,
-  viewChildren,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Sale } from '@core/services/sale/sale';
@@ -41,7 +40,6 @@ import { Customer } from '@shared/models/customer';
 })
 export class PointOfSale implements OnInit {
   private readonly saleService = inject(Sale);
-  private readonly textInputs = viewChildren<TextInput>(TextInput);
   protected readonly selectedMedications = this.saleService.selectedMedications;
   protected readonly medications = this.saleService.medications;
   protected readonly searchMedicationKeyword = signal(new FormControl(''));
@@ -85,11 +83,8 @@ export class PointOfSale implements OnInit {
   protected handleSelectCustomer(customer: Customer | null) {
     this.selectedCustomer.set(customer);
     this.searchCustomerKeyword().setValue(customer?.name ?? '');
-    const customerInput = this.textInputs().find(
-      (input) => input.placeholder() === 'Search customer...'
-    );
 
-    customerInput?.blur();
+    (document.activeElement as HTMLElement)?.blur();
   }
 
   protected handleClearCustomer(): void {
